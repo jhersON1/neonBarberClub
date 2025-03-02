@@ -31,5 +31,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.NEONBARBERTOKEN }}
         run: |
           npm run ng -- deploy --repo=https://github.com/jhersON1/neonBarberClub.git --name="jhersON1" --email="rodriguezpaul98@gmail.com" --base-href=/
-
-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
