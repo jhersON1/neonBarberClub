@@ -1,0 +1,79 @@
+<div class="min-h-screen bg-white">
+    <!-- Navbar minimalista -->
+    <app-navbar></app-navbar>
+  
+    <!-- Hero Video Section -->
+    <section class="w-full"> 
+      <app-hero-video></app-hero-video>
+    </section>
+  
+    <!-- Services Grid - Más minimalista -->
+    <section class="bg-white py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+      <div class="container mx-auto max-w-[1400px]">
+        <h2 class="text-xl sm:text-2xl md:text-3xl font-light text-center mb-8 sm:mb-12 md:mb-16 tracking-wider">SIGNATURE SERVICES</h2>
+  
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-12 max-w-6xl mx-auto">
+          <!-- Service Cards con aspect ratio consistente -->
+          <div class="space-y-3 sm:space-y-4 text-center">
+            <div class="aspect-[4/5] bg-gray-50 relative overflow-hidden">
+              <img src="service1.jpg" alt="AI Precision Cut" class="w-full h-full object-cover absolute inset-0">
+            </div>
+            <h3 class="text-base sm:text-lg md:text-xl font-light tracking-wide">AI PRECISION CUT</h3>
+            <p class="text-sm text-gray-600">FROM $45</p>
+          </div>
+          <!-- Repetir para otros servicios -->
+  
+          <div class="space-y-3 sm:space-y-4 text-center">
+            <div class="aspect-[4/5] bg-gray-50 relative overflow-hidden">
+              <img src="service1.jpg" alt="AI Precision Cut" class="w-full h-full object-cover absolute inset-0">
+            </div>
+            <h3 class="text-base sm:text-lg md:text-xl font-light tracking-wide">CUT PLUS BARBER</h3>
+            <p class="text-sm text-gray-600">FROM $35</p>
+          </div>
+  
+          <div class="space-y-3 sm:space-y-4 text-center">
+            <div class="aspect-[4/5] bg-gray-50 relative overflow-hidden">
+              <img src="service1.jpg" alt="AI Precision Cut" class="w-full h-full object-cover absolute inset-0">
+            </div>
+            <h3 class="text-base sm:text-lg md:text-xl font-light tracking-wide">BARB</h3>
+            <p class="text-sm text-gray-600">FROM $25</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Feature Section - Minimalista -->
+    <section class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-black text-white">
+      <div class="container mx-auto max-w-[1400px]">
+        <div class="grid md:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-center max-w-6xl mx-auto">
+          <div class="max-w-xl">
+            <h2 class="text-xl sm:text-2xl md:text-3xl font-light mb-4 sm:mb-6 md:mb-8 tracking-wider">AI STYLE INNOVATION</h2>
+            <div class="space-y-4 sm:space-y-6 text-gray-300">
+              <p class="text-sm sm:text-base">Experience the perfect blend of artificial intelligence and expert craftsmanship...</p>
+              <button class="w-full sm:w-auto px-6 sm:px-8 py-3 border border-white hover:bg-white hover:text-black transition-all mt-4 sm:mt-6 md:mt-8">
+                LEARN MORE
+              </button>
+            </div>
+          </div>
+          <div class="aspect-square sm:aspect-[4/3] md:aspect-square bg-gray-900 mt-8 md:mt-0"></div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Booking Section - Simplificado -->
+    <section class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
+      <app-booking></app-booking>
+    </section>
+    
+  
+    <!-- Location Map Section -->
+  
+    <section class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <app-location></app-location>
+    </section>
+  
+    <!-- Footer - Minimalista -->
+    <footer class="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white border-t border-black/5">
+      <app-footer></app-footer>
+    </footer>
+  </div>
