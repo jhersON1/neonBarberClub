@@ -17,17 +17,27 @@ export class HeroVideoComponent implements AfterViewInit {
   constructor() { }
 
   ngAfterViewInit() {
-
-    this.playVideo(this.mobileVideo);
-    this.playVideo(this.desktopVideo);
-
+    // Reemplazar la llamada directa a play() con una verificación de muted
+    setTimeout(() => {
+      this.tryPlayVideo(this.mobileVideo);
+      this.tryPlayVideo(this.desktopVideo);
+    }, 0);
   }
-
-  private playVideo(videoRef: ElementRef<HTMLVideoElement>) {
+  
+  private tryPlayVideo(videoRef: ElementRef<HTMLVideoElement>) {
     if (videoRef?.nativeElement) {
-      videoRef.nativeElement.play().catch(error => {
-        console.error('Video play failed:', error);
-      });
+      // Asegurar que el video esté silenciado
+      videoRef.nativeElement.muted = true;
+      
+      // Intenta reproducir el video
+      const playPromise = videoRef.nativeElement.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.warn('Reproducción automática bloqueada:', error);
+          // No mostrar error en consola, ya que es comportamiento esperado
+        });
+      }
     }
   }
 
