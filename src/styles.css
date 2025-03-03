@@ -1,2 +1,116 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+
+:root {
+    /* Colores */
+    --color-primary: #000000;
+    --color-accent: #00a0ff; /* Neon blue */
+    --color-background: #ffffff;
+    --color-text: #1a1a1a;
+    --color-text-light: #666666;
+    
+    /* Espaciado */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 4rem;
+  
+    /* Fuentes */
+    --font-size-xs: 0.75rem;   /* 12px */
+    --font-size-sm: 0.875rem;  /* 14px */
+    --font-size-base: 1rem;    /* 16px */
+    --font-size-lg: 1.125rem;  /* 18px */
+    --font-size-xl: 1.25rem;   /* 20px */
+    --font-size-2xl: 1.5rem;   /* 24px */
+    --font-size-3xl: 1.875rem; /* 30px */
+    --font-size-4xl: 2.25rem;  /* 36px */
+  }
+  
+  /* Ajustes específicos para pantallas iPad */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    :root {
+      --font-size-xs: 0.75rem;   /* 12px */
+      --font-size-sm: 0.813rem;  /* 13px */
+      --font-size-base: 0.875rem;/* 14px */
+      --font-size-lg: 1rem;      /* 16px */
+      --font-size-xl: 1.125rem;  /* 18px */
+      --font-size-2xl: 1.25rem;  /* 20px */
+      --font-size-3xl: 1.5rem;   /* 24px */
+    }
+  }
+  
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+  
+  @media (min-width: 768px) and (max-width: 1023px) {
+    html {
+      font-size: 15px; /* Ligera reducción para iPads */
+    }
+  }
+  
+  @media (min-width: 2560px) {
+    html {
+      font-size: 18px;
+    }
+  }
+  
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--color-text);
+    line-height: 1.5;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Clases de utilidad */
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .focus-visible-ring {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-accent), 0 0 0 4px var(--color-background);
+  }
+  
+  /* Ajustes específicos para iPads */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .md-ipad-text-adjust {
+      font-size: var(--font-size-xs);
+    }
+    
+    .md-ipad-padding-adjust {
+      padding-top: 0.625rem; /* 2.5 * 0.25rem */
+      padding-bottom: 0.625rem; /* 2.5 * 0.25rem */
+      padding-left: 1.25rem; /* 5 * 0.25rem */
+      padding-right: 1.25rem; /* 5 * 0.25rem */
+    }
+    
+    .md-ipad-spacing-adjust {
+      margin-bottom: 0.75rem; /* space-y-3 equivalent */
+      gap: 0.75rem; /* gap-3 equivalent */
+    }
+  }
+  
+  /* Animaciones */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .fade-in {
+    animation: fadeIn 300ms ease;
+  }
+  
+  /* Mejoras de accesibilidad */
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }

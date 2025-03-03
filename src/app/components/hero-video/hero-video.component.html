@@ -1,34 +1,41 @@
 <div class="relative w-full">
-    <!-- Mobile Video - Mantiene altura completa -->
+    <!-- Mobile Video -->
     <div class="md:hidden h-[calc(100vh-80px)] sm:h-[calc(100vh-96px)]">
         <video #mobileVideo playsinline autoplay loop muted class="w-full h-full object-cover">
             <source src="baber-hero.mp4" type="video/mp4">
         </video>
     </div>
-    <!-- Desktop Video - Se ajusta a su aspect ratio natural -->
-    <div class="hidden md:block">
+    
+    <!-- Desktop Video -->
+    <div class="hidden md:block 4xl:hidden">
         <video #desktopVideo playsinline autoplay loop muted class="w-full">
             <source src="baber-hero.mp4" type="video/mp4">
         </video>
     </div>
+    
+    <!-- 4K+ Video -->
+    <div class="hidden 4xl:block">
+        <video #ultrawideVideo playsinline autoplay loop muted class="w-full max-w-screen-3xl mx-auto">
+            <source src="baber-hero.mp4" type="video/mp4">
+            <source src="baber-hero.mp4" type="video/mp4">
+        </video>
+    </div>
 
-    <!-- Overlay Content -->
-    <div class="absolute inset-0 flex items-end md:items-start p-4 md:p-8 lg:p-12 "
-        style="padding-top: calc(80px + 2rem);">
-        <div class="inline-flex flex-col md:w-1/2 2xl:w-1/3">
-            <h1 class="text-[#fbfbfb] text-3xl md:text-4xl lg:text-5xl font-light tracking-wider">
-                FLAWLESS SKIN, <br>ALL DAY IMPECCABLE
+    <!-- Overlay Content ajustado para iPads -->
+    <div class="absolute inset-0 flex items-end md:items-start p-4 md:p-8 lg:p-12 2xl:p-16 4xl:p-24">
+        <div class="inline-flex flex-col md:w-1/2 2xl:w-1/3 md:pt-20 lg:pt-24">
+            <h1 class="text-[#fbfbfb] text-3xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-6xl 4xl:text-7xl font-light tracking-wider">
+                ELEVA TU PRESENCIA
             </h1>
-            <div class="font-sans mt-6 md:mt-8 text-[#fbfbfb]">
-                <p>Beautiful blurred skin with a soft and natural feel. Our new liquid matte foundation and setting
-                    spray are simply Impeccable.</p>
+            <div class="font-sans mt-6 md:mt-6 lg:mt-8 2xl:mt-10 4xl:mt-12 text-[#fbfbfb] text-sm md:text-xs lg:text-sm xl:text-base 2xl:text-lg 4xl:text-xl max-w-3xl">
+                <p>Cortes que marcan la diferencia, encuentra tu estilo</p>
             </div>
-            <div class="mt-6 md:mt-12 flex gap-3 flex-wrap items-start">
-                <a routerLink="/shop" class="px-6 py-3 bg-white text-black hover:bg-white/90">
-                    BOOK
+            <div class="mt-6 md:mt-8 lg:mt-10 xl:mt-12 2xl:mt-16 4xl:mt-20 flex gap-3 flex-wrap items-start">
+                <a routerLink="/shop" class="px-6 py-3 md:px-6 md:py-3 lg:px-8 lg:py-4 2xl:px-10 2xl:py-5 4xl:text-xl bg-white text-black hover:bg-white/90 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white">
+                    RESERVA
                 </a>
-                <a routerLink="/learn" class="px-6 py-3 border border-white text-white hover:bg-white hover:text-black">
-                    LEARN MORE
+                <a routerLink="/learn" class="px-6 py-3 md:px-6 md:py-3 lg:px-8 lg:py-4 2xl:px-10 2xl:py-5 4xl:text-xl border border-white text-white hover:bg-white hover:text-black transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white">
+                    SABER MÁS
                 </a>
             </div>
         </div>

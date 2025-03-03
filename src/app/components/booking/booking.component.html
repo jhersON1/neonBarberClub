@@ -1,42 +1,63 @@
 <div class="max-w-3xl mx-auto">
-    <h2 class="text-xl sm:text-2xl md:text-3xl font-light text-center mb-8 sm:mb-12 md:mb-16 tracking-wider">BOOK AN
-        APPOINTMENT</h2>
+    <h2 class="text-xl sm:text-2xl md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl 4xl:text-5xl font-light text-center mb-8 sm:mb-12 md:mb-10 lg:mb-12 xl:mb-16 2xl:mb-20 tracking-wider">BOOK AN APPOINTMENT</h2>
 
-    <form class="space-y-6 sm:space-y-8">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-            <input type="text" placeholder="First Name"
-                class="w-full p-3 border-b border-black/20 focus:border-black outline-none transition-all text-sm sm:text-base">
-            <input type="text" placeholder="Last Name"
-                class="w-full p-3 border-b border-black/20 focus:border-black outline-none transition-all text-sm sm:text-base">
+    <form class="space-y-6 sm:space-y-8 md:space-y-6 lg:space-y-8 2xl:space-y-10 4xl:space-y-12">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-4 lg:gap-6 2xl:gap-8">
+            <div class="relative">
+                <input type="text" placeholder="First Name"
+                    class="w-full p-3 md:p-2.5 lg:p-3 2xl:p-4 4xl:p-5 4xl:text-xl border-b-2 border-black/20 focus:border-neon-blue-500 outline-none transition-all text-sm md:text-xs lg:text-sm xl:text-base peer">
+                <span class="absolute left-0 -bottom-0.5 w-0 h-0.5 bg-neon-blue-500 transition-all duration-300 peer-focus:w-full"></span>
+            </div>
+            <div class="relative">
+                <input type="text" placeholder="Last Name"
+                    class="w-full p-3 md:p-2.5 lg:p-3 2xl:p-4 4xl:p-5 4xl:text-xl border-b-2 border-black/20 focus:border-neon-blue-500 outline-none transition-all text-sm md:text-xs lg:text-sm xl:text-base peer">
+                <span class="absolute left-0 -bottom-0.5 w-0 h-0.5 bg-neon-blue-500 transition-all duration-300 peer-focus:w-full"></span>
+            </div>
         </div>
 
-        <input type="email" placeholder="Email Address"
-            class="w-full p-3 border-b border-black/20 focus:border-black outline-none transition-all text-sm sm:text-base">
+        <div class="relative">
+            <input type="email" placeholder="Email Address"
+                class="w-full p-3 md:p-2.5 lg:p-3 2xl:p-4 4xl:p-5 4xl:text-xl border-b-2 border-black/20 focus:border-neon-blue-500 outline-none transition-all text-sm md:text-xs lg:text-sm xl:text-base peer">
+            <span class="absolute left-0 -bottom-0.5 w-0 h-0.5 bg-neon-blue-500 transition-all duration-300 peer-focus:w-full"></span>
+        </div>
 
-        <select
-            class="w-full p-3 border-b border-black/20 focus:border-black outline-none transition-all text-sm sm:text-base bg-transparent">
-            <option>Select Service</option>
-            <option>Select Service</option>
-            <option>AI Precision Cut - $45</option>
-            <option>Beard Sculpting - $35</option>
-            <option>Royal Shave - $40</option>
-        </select>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-            <input type="date"
-                class="w-full p-3 border-b border-black/20 focus:border-black outline-none transition-all text-sm sm:text-base">
+        <div class="relative">
             <select
-                class="w-full p-3 border-b border-black/20 focus:border-black outline-none transition-all text-sm sm:text-base bg-transparent">
-                <option>Select Time</option>
-                <option>Select Time</option>
-                <option>Morning</option>
-                <option>Afternoon</option>
-                <option>Evening</option>
+                class="w-full p-3 md:p-2.5 lg:p-3 2xl:p-4 4xl:p-5 4xl:text-xl border-b-2 border-black/20 focus:border-neon-blue-500 outline-none transition-all text-sm md:text-xs lg:text-sm xl:text-base bg-transparent peer appearance-none cursor-pointer">
+                <option>Servicios</option>
+                <option>Corte - $60</option>
+                <option>Ceja - $35</option>
+                <option>Barba - $40</option>
             </select>
+            <span class="absolute left-0 -bottom-0.5 w-0 h-0.5 bg-neon-blue-500 transition-all duration-300 peer-focus:w-full"></span>
+            <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7" />
+            </svg>
         </div>
 
-        <button class="w-full p-4 bg-black text-white hover:bg-gray-900 transition-all text-sm sm:text-base">
-            BOOK NOW
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-4 lg:gap-6 2xl:gap-8">
+            <div class="relative">
+                <input type="date"
+                    class="w-full p-3 md:p-2.5 lg:p-3 2xl:p-4 4xl:p-5 4xl:text-xl border-b-2 border-black/20 focus:border-neon-blue-500 outline-none transition-all text-sm md:text-xs lg:text-sm xl:text-base peer">
+                <span class="absolute left-0 -bottom-0.5 w-0 h-0.5 bg-neon-blue-500 transition-all duration-300 peer-focus:w-full"></span>
+            </div>
+            <div class="relative">
+                <select
+                    class="w-full p-3 md:p-2.5 lg:p-3 2xl:p-4 4xl:p-5 4xl:text-xl border-b-2 border-black/20 focus:border-neon-blue-500 outline-none transition-all text-sm md:text-xs lg:text-sm xl:text-base bg-transparent peer appearance-none cursor-pointer">
+                    <option>Select Time</option>
+                    <option>Morning</option>
+                    <option>Afternoon</option>
+                    <option>Evening</option>
+                </select>
+                <span class="absolute left-0 -bottom-0.5 w-0 h-0.5 bg-neon-blue-500 transition-all duration-300 peer-focus:w-full"></span>
+                <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7" />
+                </svg>
+            </div>
+        </div>
+
+        <button class="w-full p-4 md:p-3 lg:p-4 2xl:p-5 4xl:p-6 4xl:text-xl bg-black text-white hover:bg-neon-blue-600 focus:bg-neon-blue-700 active:bg-neon-blue-800 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-neon-blue-500 focus:ring-offset-2">
+            RESERVA AHORA
         </button>
     </form>
 </div>
