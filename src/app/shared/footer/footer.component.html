@@ -1,37 +1,42 @@
 <div class="grid md:grid-cols-4 gap-12 md:gap-8 lg:gap-12">
     <div>
-        <h3 class="text-sm font-medium mb-4 md:text-xs lg:text-sm xl:text-base">ABOUT</h3>
-        <p class="text-sm text-gray-600 md:text-xs lg:text-sm xl:text-base">The future of grooming, powered by artificial intelligence.</p>
+        <h3 class="text-sm font-medium mb-4 md:text-xs lg:text-sm xl:text-base">SOBRE NOSOTROS</h3>
+        <p class="text-sm text-gray-600 md:text-xs lg:text-sm xl:text-base">En Neon Barber Club combinamos técnicas tradicionales de barbería con un ambiente moderno y exclusivo. Tu barbería de confianza en Santa Cruz de la Sierra.</p>
     </div>
 
     <div>
-        <h3 class="text-sm font-medium mb-4 md:text-xs lg:text-sm xl:text-base">SERVICES</h3>
+        <h3 class="text-sm font-medium mb-4 md:text-xs lg:text-sm xl:text-base">SERVICIOS</h3>
         <ul class="space-y-2 text-sm text-gray-600 md:text-xs lg:text-sm xl:text-base">
-            <li>AI Precision Cut</li>
-            <li>Beard Sculpting</li>
-            <li>Royal Shave</li>
+            <li><button (click)="scrollToSection('servicios')" class="hover:text-neon-blue-500 transition-colors text-left">Corte - 40Bs</button></li>
+            <li><button (click)="scrollToSection('servicios')" class="hover:text-neon-blue-500 transition-colors text-left">Barba y Ceja - 20Bs</button></li>
+            <li><button (click)="scrollToSection('reservar')" class="hover:text-neon-blue-500 transition-colors text-left">Reservar cita</button></li>
         </ul>
     </div>
 
     <div>
-        <h3 class="text-sm font-medium mb-4 md:text-xs lg:text-sm xl:text-base">CONTACT</h3>
+        <h3 class="text-sm font-medium mb-4 md:text-xs lg:text-sm xl:text-base">CONTACTO</h3>
         <ul class="space-y-2 text-sm text-gray-600 md:text-xs lg:text-sm xl:text-base">
-            <li>infoluxuryai.salon</li>
-            <li>+1 (555) 123-4567</li>
-            <li>123 Innovation Ave</li>
+            <li>info&#64;neonbarberclub.com</li>
+            <li>+591 3 123-4567</li>
+            <li>Av. Principal Plan 3 Mil</li>
+            <li>Santa Cruz de la Sierra</li>
         </ul>
     </div>
 
     <div>
-        <h3 class="text-sm font-medium mb-4 md:text-xs lg:text-sm xl:text-base">FOLLOW</h3>
-        <div class="flex gap-4">
-            <a href="#" class="text-gray-600 hover:text-neon-blue-500 md:text-xs lg:text-sm xl:text-base transition-colors">IG</a>
-            <a href="#" class="text-gray-600 hover:text-neon-blue-500 md:text-xs lg:text-sm xl:text-base transition-colors">FB</a>
-            <a href="#" class="text-gray-600 hover:text-neon-blue-500 md:text-xs lg:text-sm xl:text-base transition-colors">TW</a>
+        <h3 class="text-sm font-medium mb-4 md:text-xs lg:text-sm xl:text-base">HORARIOS</h3>
+        <div class="space-y-2 text-sm text-gray-600 md:text-xs lg:text-sm xl:text-base">
+            <p>Lunes - Sábado</p>
+            <p>9:00 AM - 8:00 PM</p>
+            <div class="mt-4 flex gap-4">
+                <a href="#" class="text-gray-600 hover:text-neon-blue-500 transition-colors">IG</a>
+                <a href="#" class="text-gray-600 hover:text-neon-blue-500 transition-colors">FB</a>
+                <a href="#" class="text-gray-600 hover:text-neon-blue-500 transition-colors">WA</a>
+            </div>
         </div>
     </div>
 </div>
 
 <div class="mt-16 pt-8 border-t border-black/5 text-center text-sm text-gray-600 md:text-xs lg:text-sm xl:text-base">
-    <p>© 2025 LUXURY·AI Barbershop. All rights reserved.</p>
+    <p>© 2025 NEON BARBER CLUB. Todos los derechos reservados.</p>
 </div>

@@ -21,7 +21,6 @@ export class HeroVideoComponent implements AfterViewInit {
     this.desktopVideo.nativeElement.muted = true;
     this.playVideo(this.mobileVideo);
     this.playVideo(this.desktopVideo);
-
   }
 
   private playVideo(videoRef: ElementRef<HTMLVideoElement>) {
@@ -32,4 +31,18 @@ export class HeroVideoComponent implements AfterViewInit {
     }
   }
 
+  // Función para hacer scroll a las secciones
+  scrollToSection(sectionId: string) {
+    const targetElement = document.getElementById(sectionId);
+
+    if (targetElement) {
+      const navbarHeight = 80; // Altura aproximada del navbar
+      const elementPosition = targetElement.offsetTop - navbarHeight;
+      
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth'
+      });
+    }
+  }
 }

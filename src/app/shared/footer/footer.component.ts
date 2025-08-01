@@ -10,4 +10,17 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class FooterComponent {
 
+  scrollToSection(sectionId: string) {
+    const targetElement = document.getElementById(sectionId);
+
+    if (targetElement) {
+      const navbarHeight = 80;
+      const elementPosition = targetElement.offsetTop - navbarHeight;
+      
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth'
+      });
+    }
+  }
 }
