@@ -14,7 +14,6 @@ export class NavbarComponent {
   isMenuOpen = false;
   router = inject(Router);
 
-  // Cerrar menú al hacer click fuera
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const target = event.target as HTMLElement;
@@ -23,7 +22,6 @@ export class NavbarComponent {
     }
   }
 
-  // Cerrar menú al cambiar de ruta
   ngOnInit() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -32,11 +30,26 @@ export class NavbarComponent {
     });
   }
 
-  // Prevenir scroll cuando el menú está abierto
   @HostListener('window:scroll', ['$event'])
   onScroll() {
     if (this.isMenuOpen) {
       window.scrollTo(0, 0);
+    }
+  }
+
+  scrollToSection(sectionId: string) {
+    this.isMenuOpen = false;
+    
+    const targetElement = document.getElementById(sectionId);
+
+    if (targetElement) {
+      const navbarHeight = 80;
+      const elementPosition = targetElement.offsetTop - navbarHeight;
+      
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth'
+      });
     }
   }
 }

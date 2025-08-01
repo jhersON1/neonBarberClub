@@ -2,12 +2,12 @@
 
   <app-navbar></app-navbar>
 
-  <section class="w-full">
+  <section id="inicio" class="w-full">
     <app-hero-video></app-hero-video>
   </section>
 
   <!-- Services -->
-  <section class="bg-white py-12 sm:py-16 md:py-14 lg:py-16 xl:py-20 2xl:py-24 px-4 sm:px-6 lg:px-8">
+  <section id="servicios" class="bg-white py-12 sm:py-16 md:py-14 lg:py-16 xl:py-20 2xl:py-24 px-4 sm:px-6 lg:px-8">
     <div class="container mx-auto max-w-[1400px]">
       <h2
         class="text-xl sm:text-2xl md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-light text-center mb-8 sm:mb-12 md:mb-10 lg:mb-12 xl:mb-16 tracking-wider">
@@ -48,6 +48,7 @@
           <div class="space-y-4 sm:space-y-6 md:space-y-3 lg:space-y-4 xl:space-y-6 text-gray-300">
             <p class="text-sm sm:text-base md:text-xs lg:text-sm xl:text-base 2xl:text-lg">En Neon Barber Club combinamos técnicas tradicionales de barbería con un ambiente moderno y exclusivo. Cada corte es una obra de arte personalizada para realzar tu estilo único.</p>
             <button
+              (click)="scrollToSection('servicios')"
               class="w-full sm:w-auto px-6 sm:px-8 py-3 md:px-5 md:py-2.5 lg:px-6 lg:py-3 xl:px-8 xl:py-4 2xl:px-10 2xl:py-5 border border-white hover:bg-white hover:text-black transition-all mt-4 sm:mt-6 md:mt-4 lg:mt-6 xl:mt-8 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black">
               CONOCE MÁS
             </button>
@@ -60,11 +61,11 @@
     </div>
   </section>
 
-  <section class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
+  <section id="reservar" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
     <app-booking></app-booking>
   </section>
 
-  <section class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
+  <section id="ubicacion" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
     <app-location></app-location>
   </section>
 

@@ -19,4 +19,18 @@ import { NavbarComponent } from '../../shared/navbar/navbar.component';
 })
 export default class HomepageComponent {
 
+  // Función para hacer scroll a las secciones
+  scrollToSection(sectionId: string) {
+    const targetElement = document.getElementById(sectionId);
+
+    if (targetElement) {
+      const navbarHeight = 80; // Altura aproximada del navbar
+      const elementPosition = targetElement.offsetTop - navbarHeight;
+      
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth'
+      });
+    }
+  }
 }
