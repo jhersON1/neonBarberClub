@@ -30,4 +30,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.NEONBARBERTOKEN }}
         run: |
-          npm run ng -- deploy --repo=https://github.com/jhersON1/neonBarberClub.git --name="jhersON1" --email="rodriguezpaul98@gmail.com" --base-href=/neonBarberClub/
+          npm run ng -- deploy --base-href=/ --name="jhersON1" --email="rodriguezpaul98@gmail.com" --cname=neonbarberclub.com

@@ -19,6 +19,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "baseHref": "/",
             "outputPath": "dist/neon-barber-club",
             "index": "src/index.html",
             "browser": "src/main.ts",
