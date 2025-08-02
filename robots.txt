@@ -13,8 +13,8 @@ Disallow: /*.doc$
 Disallow: /*.docx$
 
 # Allow important resources
-Allow: /corte.png
-Allow: /barba.png
-Allow: /neonBarberBackground.jpg
+Allow: /corte.webp
+Allow: /barba.webp
+Allow: /neonBarberBackground.webp
 Allow: /baber-hero.mp4
 Allow: /favicon.ico
