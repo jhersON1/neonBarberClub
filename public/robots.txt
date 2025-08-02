@@ -1,8 +1,9 @@
 User-agent: *
 Allow: /
 
-# Sitemap
+# Sitemaps
 Sitemap: https://neonbarberclub.com/sitemap.xml
+Sitemap: https://neonbarberclub.com/sitemap-simple.xml
 
 # Crawl-delay
 Crawl-delay: 1
