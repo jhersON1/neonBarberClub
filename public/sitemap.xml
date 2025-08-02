@@ -7,21 +7,25 @@
     <lastmod>2025-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    
     <image:image>
       <image:loc>https://neonbarberclub.com/neonBarberBackground.webp</image:loc>
       <image:title>Interior moderno de Neon Barber Club</image:title>
-      <image:caption>Ambiente exclusivo con iluminacion neon en Neon Barber Club Santa Cruz</image:caption>
+      <image:caption>Ambiente exclusivo con iluminación neón en Neon Barber Club Santa Cruz</image:caption>
     </image:image>
+
     <image:image>
       <image:loc>https://neonbarberclub.com/corte.webp</image:loc>
       <image:title>Corte de cabello profesional</image:title>
       <image:caption>Servicio de corte de cabello profesional en Neon Barber Club - 40Bs</image:caption>
     </image:image>
+
     <image:image>
       <image:loc>https://neonbarberclub.com/barba.webp</image:loc>
       <image:title>Arreglo de barba y cejas</image:title>
       <image:caption>Servicio de arreglo de barba y cejas en Neon Barber Club - 20Bs</image:caption>
     </image:image>
+
     <video:video>
       <video:thumbnail_loc>https://neonbarberclub.com/neonBarberBackground.webp</video:thumbnail_loc>
       <video:title>Video promocional Neon Barber Club</video:title>
