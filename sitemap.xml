@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+    <url>
+        <loc>https://neonbarberclub.com/</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <image:image>
+            <image:loc>https://neonbarberclub.com/neonBarberBackground.jpg</image:loc>
+            <image:title>Interior moderno de Neon Barber Club</image:title>
+            <image:caption>Ambiente exclusivo con iluminación neón en Neon Barber Club Santa Cruz</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://neonbarberclub.com/corte.png</image:loc>
+            <image:title>Corte de cabello profesional</image:title>
+            <image:caption>Servicio de corte de cabello profesional en Neon Barber Club - 40Bs</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://neonbarberclub.com/barba.png</image:loc>
+            <image:title>Arreglo de barba y cejas</image:title>
+            <image:caption>Servicio de arreglo de barba y cejas en Neon Barber Club - 20Bs</image:caption>
+        </image:image>
+        <video:video>
+            <video:thumbnail_loc>https://neonbarberclub.com/neonBarberBackground.jpg</video:thumbnail_loc>
+            <video:title>Video promocional Neon Barber Club</video:title>
+            <video:description>Video promocional mostrando los servicios y ambiente de Neon Barber Club en Santa Cruz de la Sierra</video:description>
+            <video:content_loc>https://neonbarberclub.com/baber-hero.mp4</video:content_loc>
+            <video:duration>30</video:duration>
+        </video:video>
+    </url>
+</urlset>
