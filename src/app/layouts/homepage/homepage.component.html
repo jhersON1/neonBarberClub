@@ -7,32 +7,52 @@
   </section>
 
   <!-- Services -->
-  <section id="servicios" class="bg-white py-12 sm:py-16 md:py-14 lg:py-16 xl:py-20 2xl:py-24 px-4 sm:px-6 lg:px-8">
+  <section id="servicios" class="bg-white py-12 sm:py-16 md:py-14 lg:py-16 xl:py-20 2xl:py-24 px-4 sm:px-6 lg:px-8" aria-labelledby="servicios-heading">
     <div class="container mx-auto max-w-[1400px]">
-      <h2
+      <h2 id="servicios-heading"
         class="text-xl sm:text-2xl md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-light text-center mb-8 sm:mb-12 md:mb-10 lg:mb-12 xl:mb-16 tracking-wider">
         SERVICIOS</h2>
 
       <div
         class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 md:gap-8 lg:gap-12 xl:gap-16 max-w-4xl mx-auto">
 
-        <div class="space-y-3 sm:space-y-4 md:space-y-3 lg:space-y-4 text-center">
+        <article class="space-y-3 sm:space-y-4 md:space-y-3 lg:space-y-4 text-center" itemscope itemtype="https://schema.org/Service">
           <div class="aspect-[4/5] bg-gray-50 relative overflow-hidden">
-            <img src="corte.png" alt="Corte de cabello" class="w-full h-full object-cover absolute inset-0">
+            <img src="corte.png" 
+                 alt="Corte de cabello profesional en Neon Barber Club Santa Cruz - Estilo moderno y técnicas tradicionales" 
+                 title="Corte de cabello - 40Bs"
+                 loading="lazy"
+                 decoding="async"
+                 width="300"
+                 height="375"
+                 class="w-full h-full object-cover absolute inset-0"
+                 itemprop="image">
           </div>
-          <h3 class="text-base sm:text-lg md:text-base lg:text-lg xl:text-xl 2xl:text-2xl font-light tracking-wide">
+          <h3 class="text-base sm:text-lg md:text-base lg:text-lg xl:text-xl 2xl:text-2xl font-light tracking-wide" itemprop="name">
             CORTE</h3>
-          <p class="text-sm md:text-xs lg:text-sm xl:text-base text-gray-600">40Bs</p>
-        </div>
+          <p class="text-sm md:text-xs lg:text-sm xl:text-base text-gray-600" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+            <span itemprop="price">40</span><span itemprop="priceCurrency" content="BOB">Bs</span>
+          </p>
+        </article>
 
-        <div class="space-y-3 sm:space-y-4 md:space-y-3 lg:space-y-4 text-center">
+        <article class="space-y-3 sm:space-y-4 md:space-y-3 lg:space-y-4 text-center" itemscope itemtype="https://schema.org/Service">
           <div class="aspect-[4/5] bg-gray-50 relative overflow-hidden">
-            <img src="barba.png" alt="Barba y ceja" class="w-full h-full object-cover absolute inset-0">
+            <img src="barba.png" 
+                 alt="Arreglo de barba y cejas en Neon Barber Club Santa Cruz - Precisión y estilo profesional" 
+                 title="Barba y Ceja - 20Bs"
+                 loading="lazy"
+                 decoding="async"
+                 width="300"
+                 height="375"
+                 class="w-full h-full object-cover absolute inset-0"
+                 itemprop="image">
           </div>
-          <h3 class="text-base sm:text-lg md:text-base lg:text-lg xl:text-xl 2xl:text-2xl font-light tracking-wide">
+          <h3 class="text-base sm:text-lg md:text-base lg:text-lg xl:text-xl 2xl:text-2xl font-light tracking-wide" itemprop="name">
             BARBA Y CEJA</h3>
-          <p class="text-sm md:text-xs lg:text-sm xl:text-base text-gray-600"> 20Bs</p>
-        </div>
+          <p class="text-sm md:text-xs lg:text-sm xl:text-base text-gray-600" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+            <span itemprop="price">20</span><span itemprop="priceCurrency" content="BOB">Bs</span>
+          </p>
+        </article>
       </div>
     </div>
   </section>
@@ -55,7 +75,14 @@
           </div>
         </div>
         <div class="aspect-square sm:aspect-[4/3] md:aspect-square bg-gray-900 mt-8 md:mt-0 relative overflow-hidden">
-          <img src="neonBarberBackground.jpg" alt="Interior de Neon Barber Club" class="w-full h-full object-cover absolute inset-0">
+          <img src="neonBarberBackground.jpg" 
+               alt="Interior moderno de Neon Barber Club en Santa Cruz - Ambiente exclusivo con iluminación neón" 
+               title="Interior Neon Barber Club - Experiencia única en barbería"
+               loading="lazy"
+               decoding="async"
+               width="400"
+               height="400"
+               class="w-full h-full object-cover absolute inset-0">
         </div>
       </div>
     </div>
