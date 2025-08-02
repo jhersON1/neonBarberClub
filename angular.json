@@ -51,10 +51,15 @@
                 }
               ],
               "outputHashing": "all",
-              "optimization": true,
+              "optimization": {
+                "scripts": true,
+                "styles": true,
+                "fonts": true
+              },
               "sourceMap": false,
               "extractLicenses": true,
-              "namedChunks": false
+              "namedChunks": false,
+              "aot": true
             },
             "development": {
               "optimization": false,
