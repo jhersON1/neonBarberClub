@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://neonbarberclub.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Disallow certain file types for optimization
+Disallow: /*.pdf$
+Disallow: /*.doc$
+Disallow: /*.docx$
+
+# Allow important resources
+Allow: /corte.png
+Allow: /barba.png
+Allow: /neonBarberBackground.jpg
+Allow: /baber-hero.mp4
+Allow: /favicon.ico

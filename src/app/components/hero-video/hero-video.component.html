@@ -1,20 +1,43 @@
 <div class="relative w-full">
     <div class="md:hidden h-[calc(100vh-80px)] sm:h-[calc(100vh-96px)]">
-        <video #mobileVideo playsinline autoplay loop muted class="w-full h-full object-cover">
+        <video #mobileVideo 
+               playsinline 
+               autoplay 
+               loop 
+               muted 
+               preload="metadata"
+               aria-label="Video promocional de Neon Barber Club mostrando cortes profesionales"
+               class="w-full h-full object-cover">
             <source src="baber-hero.mp4" type="video/mp4">
+            <p>Tu navegador no soporta videos HTML5. <a href="baber-hero.mp4">Descargar video</a>.</p>
         </video>
     </div>
     
     <div class="hidden md:block 4xl:hidden">
-        <video #desktopVideo playsinline autoplay loop muted class="w-full">
+        <video #desktopVideo 
+               playsinline 
+               autoplay 
+               loop 
+               muted 
+               preload="metadata"
+               aria-label="Video promocional de Neon Barber Club mostrando cortes profesionales"
+               class="w-full">
             <source src="baber-hero.mp4" type="video/mp4">
+            <p>Tu navegador no soporta videos HTML5. <a href="baber-hero.mp4">Descargar video</a>.</p>
         </video>
     </div>
     
     <div class="hidden 4xl:block">
-        <video #ultrawideVideo playsinline autoplay loop muted class="w-full max-w-screen-3xl mx-auto">
+        <video #ultrawideVideo 
+               playsinline 
+               autoplay 
+               loop 
+               muted 
+               preload="metadata"
+               aria-label="Video promocional de Neon Barber Club mostrando cortes profesionales"
+               class="w-full max-w-screen-3xl mx-auto">
             <source src="baber-hero.mp4" type="video/mp4">
-            <source src="baber-hero.mp4" type="video/mp4">
+            <p>Tu navegador no soporta videos HTML5. <a href="baber-hero.mp4">Descargar video</a>.</p>
         </video>
     </div>
 
@@ -27,10 +50,14 @@
                 <p>Cortes que marcan la diferencia, encuentra tu estilo</p>
             </div>
             <div class="mt-6 md:mt-8 lg:mt-10 xl:mt-12 2xl:mt-16 4xl:mt-20 flex gap-3 flex-wrap items-start">
-                <button (click)="scrollToSection('reservar')" class="px-6 py-3 md:px-6 md:py-3 lg:px-8 lg:py-4 2xl:px-10 2xl:py-5 4xl:text-xl bg-white text-black hover:bg-white/90 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white">
+                <button (click)="scrollToSection('reservar')" 
+                        class="px-6 py-3 md:px-6 md:py-3 lg:px-8 lg:py-4 2xl:px-10 2xl:py-5 4xl:text-xl bg-white text-black hover:bg-white/90 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white"
+                        aria-label="Reservar cita en Neon Barber Club">
                     RESERVA
                 </button>
-                <button (click)="scrollToSection('servicios')" class="px-6 py-3 md:px-6 md:py-3 lg:px-8 lg:py-4 2xl:px-10 2xl:py-5 4xl:text-xl border border-white text-white hover:bg-white hover:text-black transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white">
+                <button (click)="scrollToSection('servicios')" 
+                        class="px-6 py-3 md:px-6 md:py-3 lg:px-8 lg:py-4 2xl:px-10 2xl:py-5 4xl:text-xl border border-white text-white hover:bg-white hover:text-black transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white"
+                        aria-label="Ver servicios de Neon Barber Club">
                     SERVICIOS
                 </button>
             </div>
