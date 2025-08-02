@@ -1,12 +1,12 @@
 <div class="relative w-full">
-    <div class="md:hidden h-[calc(100vh-80px)] sm:h-[calc(100vh-96px)]">
+    <div class="md:hidden h-[calc(100vh-80px)] sm:h-[calc(100vh-96px)] bg-white">
         <video #mobileVideo 
                playsinline 
                autoplay 
                loop 
                muted 
-               preload="metadata"
-               poster="neonBarberBackground.jpg"
+               preload="none"
+               fetchpriority="high"
                aria-label="Video promocional de Neon Barber Club mostrando cortes profesionales"
                class="w-full h-full object-cover">
             <source src="baber-hero.mp4" type="video/mp4">
@@ -14,14 +14,14 @@
         </video>
     </div>
     
-    <div class="hidden md:block 4xl:hidden">
+    <div class="hidden md:block 4xl:hidden bg-white">
         <video #desktopVideo 
                playsinline 
                autoplay 
                loop 
                muted 
-               preload="metadata"
-               poster="neonBarberBackground.jpg"
+               preload="none"
+               fetchpriority="high"
                aria-label="Video promocional de Neon Barber Club mostrando cortes profesionales"
                class="w-full">
             <source src="baber-hero.mp4" type="video/mp4">
@@ -29,14 +29,14 @@
         </video>
     </div>
     
-    <div class="hidden 4xl:block">
+    <div class="hidden 4xl:block bg-white">
         <video #ultrawideVideo 
                playsinline 
                autoplay 
                loop 
                muted 
-               preload="metadata"
-               poster="neonBarberBackground.jpg"
+               preload="none"
+               fetchpriority="high"
                aria-label="Video promocional de Neon Barber Club mostrando cortes profesionales"
                class="w-full max-w-screen-3xl mx-auto">
             <source src="baber-hero.mp4" type="video/mp4">

@@ -13,30 +13,55 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Inject, 
 export class HeroVideoComponent implements AfterViewInit {
   @ViewChild('mobileVideo') mobileVideo!: ElementRef<HTMLVideoElement>;
   @ViewChild('desktopVideo') desktopVideo!: ElementRef<HTMLVideoElement>;
+  @ViewChild('ultrawideVideo') ultrawideVideo!: ElementRef<HTMLVideoElement>;
 
-  constructor() { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
 
   ngAfterViewInit() {
-    this.mobileVideo.nativeElement.muted = true;
-    this.desktopVideo.nativeElement.muted = true;
-    this.playVideo(this.mobileVideo);
-    this.playVideo(this.desktopVideo);
-  }
-
-  private playVideo(videoRef: ElementRef<HTMLVideoElement>) {
-    if (videoRef?.nativeElement) {
-      videoRef.nativeElement.play().catch(error => {
-        console.error('Video play failed:', error);
-      });
+    if (isPlatformBrowser(this.platformId)) {
+      this.initializeVideos();
     }
   }
 
-  // Función para hacer scroll a las secciones
+  private initializeVideos() {
+
+    if (this.mobileVideo?.nativeElement) {
+      this.optimizeVideo(this.mobileVideo.nativeElement);
+    }
+    if (this.desktopVideo?.nativeElement) {
+      this.optimizeVideo(this.desktopVideo.nativeElement);
+    }
+    if (this.ultrawideVideo?.nativeElement) {
+      this.optimizeVideo(this.ultrawideVideo.nativeElement);
+    }
+  }
+
+  private optimizeVideo(video: HTMLVideoElement) {
+    video.muted = true;
+    video.playsInline = true;
+    
+    video.load();
+    
+    video.addEventListener('loadeddata', () => {
+      this.playVideo(video);
+    });
+
+    video.addEventListener('error', (e) => {
+      console.error('Error loading video:', e);
+    });
+  }
+
+  private playVideo(video: HTMLVideoElement) {
+    video.play().catch(error => {
+      console.error('Video play failed:', error);
+    });
+  }
+
   scrollToSection(sectionId: string) {
     const targetElement = document.getElementById(sectionId);
 
     if (targetElement) {
-      const navbarHeight = 80; // Altura aproximada del navbar
+      const navbarHeight = 80;
       const elementPosition = targetElement.offsetTop - navbarHeight;
       
       window.scrollTo({

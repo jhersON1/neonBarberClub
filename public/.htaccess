@@ -97,7 +97,7 @@
     Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
     
     # Prefetch headers for key resources
-    Header set Link "</baber-hero.mp4>; rel=preload; as=video, </corte.png>; rel=preload; as=image, </barba.png>; rel=preload; as=image"
+    Header set Link "</baber-hero.mp4>; rel=preload; as=video, </corte.webp>; rel=preload; as=image, </barba.webp>; rel=preload; as=image"
 </IfModule>
 
 # Enable Keep-Alive
