@@ -1,7 +1,10 @@
 <nav>
     <!-- Mobile Header -->
     <div class="flex items-center justify-between px-4 md:hidden">
-        <button (click)="isMenuOpen = !isMenuOpen" class="text-gray-800 hover:text-neon-blue-500 transition-colors z-50 p-2">
+        <button (click)="isMenuOpen = !isMenuOpen" 
+                class="text-gray-800 hover:text-neon-blue-500 transition-colors z-50 p-2"
+                [attr.aria-label]="isMenuOpen ? 'Cerrar menú' : 'Abrir menú'"
+                [attr.aria-expanded]="isMenuOpen">
             @if (!isMenuOpen) {
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16m-16 6h16" />
@@ -13,35 +16,31 @@
             }
         </button>
         <h1 class="text-base font-light tracking-[0.1em] font-['Times_New_Roman']">NEON·BARBER</h1>
-        <button class="text-gray-800 hover:text-neon-blue-500 transition-colors p-2">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-            </svg>
-        </button>
+
+        <div class="w-10 h-10"></div>
     </div>
 
     <div class="hidden md:flex justify-between items-center px-6 lg:px-8 2xl:px-12 4xl:px-16">
         <div class="flex items-center gap-6 lg:gap-8 2xl:gap-10 4xl:gap-12">
-            <a (click)="scrollToSection('inicio')"
+            <a href="#inicio" (click)="scrollToSection('inicio', $event)"
                 class="text-gray-800 hover:text-neon-blue-500 transition-colors text-xs tracking-wider 2xl:text-sm 4xl:text-base relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-neon-blue-500 after:transition-all hover:after:w-full cursor-pointer">INICIO</a>
-            <a (click)="scrollToSection('servicios')"
+            <a href="#servicios" (click)="scrollToSection('servicios', $event)"
                 class="text-gray-800 hover:text-neon-blue-500 transition-colors text-xs tracking-wider 2xl:text-sm 4xl:text-base relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-neon-blue-500 after:transition-all hover:after:w-full cursor-pointer">SERVICIOS</a>
         </div>
 
         <div class="absolute left-1/2 -translate-x-1/2">
-            <a (click)="scrollToSection('inicio')" 
+            <a href="#inicio" (click)="scrollToSection('inicio', $event)" 
                class="text-base lg:text-lg 2xl:text-xl 4xl:text-2xl font-light tracking-[0.2em] whitespace-nowrap font-['Times_New_Roman'] cursor-pointer">
                 NEON·BARBER
             </a>
         </div>
 
         <div class="flex items-center gap-6 lg:gap-8 2xl:gap-10 4xl:gap-12">
-            <a (click)="scrollToSection('reservar')" 
+            <a href="#reservar" (click)="scrollToSection('reservar', $event)" 
                class="text-gray-800 hover:text-neon-blue-500 transition-colors text-xs tracking-wider 2xl:text-sm 4xl:text-base relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-neon-blue-500 after:transition-all hover:after:w-full cursor-pointer">
                 RESERVAR
             </a>
-            <a (click)="scrollToSection('ubicacion')" 
+            <a href="#ubicacion" (click)="scrollToSection('ubicacion', $event)" 
                class="text-gray-800 hover:text-neon-blue-500 transition-colors text-xs tracking-wider 2xl:text-sm 4xl:text-base relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-neon-blue-500 after:transition-all hover:after:w-full cursor-pointer">
                 UBICACIÓN
             </a>
@@ -51,28 +50,28 @@
     @if (isMenuOpen) {
     <div class="absolute top-full left-0 w-full bg-white/95 backdrop-blur-sm shadow-lg transform transition-transform duration-300 ease-in-out md:hidden z-50">
         <div class="flex flex-col py-2 border-t border-gray-100">
-            <a (click)="scrollToSection('inicio')"
+            <a href="#inicio" (click)="scrollToSection('inicio', $event)"
                 class="px-4 py-3 text-gray-800 hover:bg-gray-50 hover:text-neon-blue-500 transition-colors tracking-wider flex items-center justify-between text-sm cursor-pointer">
                 INICIO
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" />
                 </svg>
             </a>
-            <a (click)="scrollToSection('servicios')"
+            <a href="#servicios" (click)="scrollToSection('servicios', $event)"
                 class="px-4 py-3 text-gray-800 hover:bg-gray-50 hover:text-neon-blue-500 transition-colors tracking-wider flex items-center justify-between text-sm cursor-pointer">
                 SERVICIOS
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" />
                 </svg>
             </a>
-            <a (click)="scrollToSection('reservar')"
+            <a href="#reservar" (click)="scrollToSection('reservar', $event)"
                 class="px-4 py-3 text-gray-800 hover:bg-gray-50 hover:text-neon-blue-500 transition-colors tracking-wider flex items-center justify-between text-sm cursor-pointer">
                 RESERVAR
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" />
                 </svg>
             </a>
-            <a (click)="scrollToSection('ubicacion')"
+            <a href="#ubicacion" (click)="scrollToSection('ubicacion', $event)"
                 class="px-4 py-3 text-gray-800 hover:bg-gray-50 hover:text-neon-blue-500 transition-colors tracking-wider flex items-center justify-between text-sm cursor-pointer">
                 UBICACIÓN
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
