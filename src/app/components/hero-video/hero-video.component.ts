@@ -3,7 +3,6 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Inject, 
 
 @Component({
   selector: 'app-hero-video',
-  imports: [],
   templateUrl: './hero-video.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
@@ -55,6 +54,16 @@ export class HeroVideoComponent implements AfterViewInit {
     video.play().catch(error => {
       console.error('Video play failed:', error);
     });
+  }
+
+  onVideoError(event: Event) {
+    const video = event.target as HTMLVideoElement;
+    console.error('Video error occurred:', event);
+
+    if (!video.dataset['retried']) {
+      video.dataset['retried'] = 'true';
+      video.load();
+    }
   }
 
   scrollToSection(sectionId: string) {

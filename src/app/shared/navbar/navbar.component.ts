@@ -37,7 +37,11 @@ export class NavbarComponent {
     }
   }
 
-  scrollToSection(sectionId: string) {
+  scrollToSection(sectionId: string, event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
+    
     this.isMenuOpen = false;
     
     const targetElement = document.getElementById(sectionId);
