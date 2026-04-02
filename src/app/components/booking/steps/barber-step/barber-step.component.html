@@ -1,0 +1,71 @@
+<!-- Loading skeleton -->
+@if (isLoading()) {
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+    @for (i of [1, 2]; track i) {
+      <div class="animate-pulse bg-gray-100 rounded-lg h-36"></div>
+    }
+  </div>
+}
+
+<!-- Error state -->
+@else if (error()) {
+  <div class="text-center py-10">
+    <p class="text-gray-500 mb-4">{{ error() }}</p>
+    <button
+      (click)="retryRequested.emit()"
+      class="px-6 py-2.5 border border-black text-sm tracking-wider hover:bg-black hover:text-white transition-all"
+    >REINTENTAR</button>
+  </div>
+}
+
+<!-- Barber cards -->
+@else {
+  <p class="text-center text-gray-500 text-sm mb-6 sm:mb-8">Elige tu barbero de preferencia</p>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+    @for (barber of barbers(); track barber.id) {
+      <button
+        type="button"
+        (click)="onSelect(barber)"
+        class="group relative text-left p-5 sm:p-6 rounded-lg border-2 transition-all duration-300 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+        [class.border-black]="selectedBarber()?.id === barber.id"
+        [class.bg-black]="selectedBarber()?.id === barber.id"
+        [class.text-white]="selectedBarber()?.id === barber.id"
+        [class.border-gray-200]="selectedBarber()?.id !== barber.id"
+      >
+        <!-- Avatar placeholder -->
+        <div class="flex items-center gap-4 mb-3">
+          <div
+            class="w-12 h-12 rounded-full flex items-center justify-center text-lg font-light transition-colors"
+            [class.bg-gray-700]="selectedBarber()?.id === barber.id"
+            [class.text-white]="selectedBarber()?.id === barber.id"
+            [class.bg-gray-100]="selectedBarber()?.id !== barber.id"
+            [class.text-gray-600]="selectedBarber()?.id !== barber.id"
+          >
+            {{ barber.name.charAt(0) | uppercase }}
+          </div>
+          <h4 class="text-sm sm:text-base font-medium tracking-wider">
+            {{ barber.name | uppercase }}
+          </h4>
+        </div>
+
+        <!-- Schedule -->
+        <p class="text-xs tracking-wider transition-colors"
+          [class.text-gray-400]="selectedBarber()?.id === barber.id"
+          [class.text-gray-500]="selectedBarber()?.id !== barber.id"
+        >
+          Horario: {{ barber.schedule.startTime }} – {{ barber.schedule.endTime }}
+        </p>
+
+        <!-- Selected check -->
+        @if (selectedBarber()?.id === barber.id) {
+          <div class="absolute top-3 right-3">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+        }
+      </button>
+    }
+  </div>
+}
