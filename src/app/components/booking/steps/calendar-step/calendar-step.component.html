@@ -1,0 +1,91 @@
+<div class="max-w-md mx-auto">
+  <!-- ── Month header with navigation ────────────────────────── -->
+  <div class="flex items-center justify-between mb-5">
+    <button
+      type="button"
+      (click)="previousMonth()"
+      [disabled]="!canGoPrevious()"
+      class="p-2 rounded-full hover:bg-gray-100 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+      aria-label="Mes anterior"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+
+    <h4 class="text-sm sm:text-base font-medium tracking-wider">
+      {{ monthLabel() | uppercase }}
+    </h4>
+
+    <button
+      type="button"
+      (click)="nextMonth()"
+      class="p-2 rounded-full hover:bg-gray-100 transition-colors"
+      aria-label="Mes siguiente"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- ── Day-of-week headers ─────────────────────────────────── -->
+  <div class="grid grid-cols-7 gap-1 mb-1">
+    @for (name of dayNames; track name) {
+      <div class="text-center text-[10px] sm:text-xs text-gray-400 tracking-wider py-1">
+        {{ name }}
+      </div>
+    }
+  </div>
+
+  <!-- ── Day grid ────────────────────────────────────────────── -->
+  <div class="grid grid-cols-7 gap-1">
+    @for (day of calendarDays(); track day.dateString) {
+      <button
+        type="button"
+        [disabled]="!day.isCurrentMonth || day.isPast"
+        (click)="onDateClick(day)"
+        class="aspect-square flex items-center justify-center text-xs sm:text-sm rounded-lg transition-all duration-200 hover:bg-gray-100 focus:outline-none disabled"
+        [class.text-gray-300]="(!day.isCurrentMonth || (day.isPast && day.isCurrentMonth)) && !day.isToday"
+        [class.cursor-not-allowed]="!day.isCurrentMonth || day.isPast"
+        [class.bg-black]="day.dateString === selectedDate()"
+        [class.bg-emerald-500]="day.isToday && day.isCurrentMonth && day.dateString !== selectedDate()"
+        [class.text-white]="day.dateString === selectedDate() || (day.isToday && day.isCurrentMonth)"
+        [class.font-semibold]="day.isToday"
+      >
+        {{ day.dayOfMonth }}
+      </button>
+    }
+  </div>
+</div>
+
+<!-- ── Time slots (shown after date selection) ───────────────── -->
+@if (selectedDate()) {
+  <div class="mt-8 sm:mt-10">
+    <h4 class="text-xs sm:text-sm font-medium tracking-wider text-center mb-4">HORARIOS DISPONIBLES</h4>
+
+    @if (isLoadingSlots()) {
+      <div class="flex justify-center py-6">
+        <div class="w-6 h-6 border-2 border-gray-300 border-t-black rounded-full animate-spin"></div>
+      </div>
+    } @else if (availableSlots().length === 0) {
+      <p class="text-center text-gray-400 text-sm py-6">No hay horarios disponibles para esta fecha</p>
+    } @else {
+      <div class="grid grid-cols-3 sm:grid-cols-4 gap-2 max-w-md mx-auto">
+        @for (slot of availableSlots(); track slot) {
+          <button
+            type="button"
+            (click)="onTimeClick(slot)"
+            class="py-2.5 sm:py-3 rounded-lg text-xs sm:text-sm tracking-wider border hover:border-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1"
+            [class.border-black]="slot === selectedTime()"
+            [class.bg-black]="slot === selectedTime()"
+            [class.text-white]="slot === selectedTime()"
+            [class.border-gray-200]="slot !== selectedTime()"
+          >
+            {{ slot }}
+          </button>
+        }
+      </div>
+    }
+  </div>
+}
