@@ -17,5 +17,5 @@ Disallow: /*.docx$
 Allow: /corte.webp
 Allow: /barba.webp
 Allow: /neonBarberBackground.webp
-Allow: /baber-hero.mp4
+Allow: /barber-hero.mp4
 Allow: /favicon.ico
