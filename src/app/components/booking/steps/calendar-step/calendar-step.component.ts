@@ -131,8 +131,11 @@ export class CalendarStepComponent {
    */
   private buildMonthGrid(year: number, month: number): CalendarDay[] {
     const days: CalendarDay[] = [];
+    // "tomorrow" is the first bookable day; today and earlier are non-selectable.
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
 
     const firstOfMonth = new Date(year, month, 1);
     const lastOfMonth = new Date(year, month + 1, 0);
@@ -145,13 +148,13 @@ export class CalendarStepComponent {
     const prevMonthLast = new Date(year, month, 0).getDate();
     for (let i = startOffset - 1; i >= 0; i--) {
       const d = new Date(year, month - 1, prevMonthLast - i);
-      days.push(this.createDay(d, prevMonthLast - i, false, today));
+      days.push(this.createDay(d, prevMonthLast - i, false, today, tomorrow));
     }
 
     // Current month
     for (let d = 1; d <= lastOfMonth.getDate(); d++) {
       const date = new Date(year, month, d);
-      days.push(this.createDay(date, d, true, today));
+      days.push(this.createDay(date, d, true, today, tomorrow));
     }
 
     // Padding for next month
@@ -160,7 +163,7 @@ export class CalendarStepComponent {
       const needed = 7 - remainder;
       for (let d = 1; d <= needed; d++) {
         const date = new Date(year, month + 1, d);
-        days.push(this.createDay(date, d, false, today));
+        days.push(this.createDay(date, d, false, today, tomorrow));
       }
     }
 
@@ -173,12 +176,13 @@ export class CalendarStepComponent {
     dayOfMonth: number,
     isCurrentMonth: boolean,
     today: Date,
+    tomorrow: Date,
   ): CalendarDay {
     return {
       dayOfMonth,
       dateString: this.toISODate(date),
       isCurrentMonth,
-      isPast: date.getTime() < today.getTime(),
+      isPast: date.getTime() < tomorrow.getTime(),
       isToday: date.getTime() === today.getTime(),
     };
   }

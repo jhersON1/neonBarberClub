@@ -1,6 +1,8 @@
 /** Base URL for the Neon Barber Club backend API. */
+// export const API_BASE_URL =
+//   'https://neonbarberclub-backend-990497964029.us-central1.run.app';
 export const API_BASE_URL =
-  'https://neonbarberclub-backend-990497964029.us-central1.run.app';
+  'http://localhost:3000';
 
 /**
  * Centralised map of every backend endpoint used by the application.

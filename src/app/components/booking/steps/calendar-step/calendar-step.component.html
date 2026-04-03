@@ -45,14 +45,13 @@
         type="button"
         [disabled]="!day.isCurrentMonth || day.isPast"
         (click)="onDateClick(day)"
-        class="aspect-square flex items-center justify-center text-xs sm:text-sm rounded-lg transition-all duration-200 hover:bg-gray-100 focus:outline-none disabled:hover:bg-transparent"
-        [class.text-gray-300]="!day.isCurrentMonth || (day.isPast && day.isCurrentMonth)"
+        class="aspect-square flex items-center justify-center text-xs sm:text-sm rounded-lg transition-all duration-200 hover:bg-gray-100 focus:outline-none disabled"
+        [class.text-gray-300]="(!day.isCurrentMonth || (day.isPast && day.isCurrentMonth)) && !day.isToday"
         [class.cursor-not-allowed]="!day.isCurrentMonth || day.isPast"
         [class.bg-black]="day.dateString === selectedDate()"
-        [class.text-white]="day.dateString === selectedDate()"
+        [class.bg-emerald-500]="day.isToday && day.isCurrentMonth && day.dateString !== selectedDate()"
+        [class.text-white]="day.dateString === selectedDate() || (day.isToday && day.isCurrentMonth)"
         [class.font-semibold]="day.isToday"
-        [class.ring-1]="day.isToday && day.dateString !== selectedDate()"
-        [class.ring-black]="day.isToday && day.dateString !== selectedDate()"
       >
         {{ day.dayOfMonth }}
       </button>
