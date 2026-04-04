@@ -1,37 +1,37 @@
-<!-- ── Booking summary card ───────────────────────────────────── -->
-<div class="bg-gray-50 rounded-lg p-5 sm:p-6 mb-8 max-w-lg mx-auto">
-  <h4 class="text-xs font-medium tracking-wider text-gray-400 mb-4">RESUMEN DE TU CITA</h4>
+<!-- ── Booking summary card ─────────────────────────────── -->
+<div class="bg-gray-50/80 rounded-2xl p-6 sm:p-7 mb-8 max-w-lg mx-auto border border-gray-100">
+  <h4 class="text-[10px] font-semibold tracking-[0.18em] text-gray-400 mb-5">RESUMEN DE TU CITA</h4>
 
-  <div class="space-y-3 text-sm">
+  <div class="space-y-3.5 text-sm">
     <div class="flex justify-between items-center">
-      <span class="text-gray-500">Servicio</span>
+      <span class="text-gray-400 font-light">Servicio</span>
       <span class="font-medium">{{ summary().serviceName }}</span>
     </div>
     <div class="flex justify-between items-center">
-      <span class="text-gray-500">Precio</span>
+      <span class="text-gray-400 font-light">Precio</span>
       <span class="font-medium">{{ summary().servicePrice }} Bs</span>
     </div>
     <div class="flex justify-between items-center">
-      <span class="text-gray-500">Duración</span>
+      <span class="text-gray-400 font-light">Duración</span>
       <span class="font-medium">{{ summary().serviceDuration }} min</span>
     </div>
     <div class="flex justify-between items-center">
-      <span class="text-gray-500">Barbero</span>
+      <span class="text-gray-400 font-light">Barbero</span>
       <span class="font-medium">{{ summary().barberName }}</span>
     </div>
-    <hr class="border-gray-200">
+    <div class="h-px bg-gray-200/80 my-1"></div>
     <div class="flex justify-between items-center">
-      <span class="text-gray-500">Fecha</span>
+      <span class="text-gray-400 font-light">Fecha</span>
       <span class="font-medium">{{ formattedDate() }}</span>
     </div>
     <div class="flex justify-between items-center">
-      <span class="text-gray-500">Hora</span>
+      <span class="text-gray-400 font-light">Hora</span>
       <span class="font-medium">{{ summary().time }}</span>
     </div>
   </div>
 </div>
 
-<!-- ── Client data form ──────────────────────────────────────── -->
+<!-- ── Client data form ────────────────────────────────── -->
 <form
   [formGroup]="form"
   (ngSubmit)="onSubmit()"
@@ -39,19 +39,19 @@
 >
   <!-- Name -->
   <div>
-    <label for="clientName" class="block text-xs tracking-wider text-gray-500 mb-1.5">NOMBRE COMPLETO</label>
+    <label for="clientName" class="block text-[10px] tracking-[0.15em] text-gray-400 font-medium mb-2">NOMBRE COMPLETO</label>
     <input
       id="clientName"
       formControlName="clientName"
       type="text"
       autocomplete="name"
       placeholder="Ej: Carlos Mendez"
-      class="w-full px-4 py-3 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all"
-      [class.border-red-400]="nameCtrl.touched && nameCtrl.invalid"
+      class="w-full px-4 py-3.5 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black transition-all duration-200 placeholder:text-gray-300"
+      [class.border-red-300]="nameCtrl.touched && nameCtrl.invalid"
       [class.border-gray-200]="!nameCtrl.touched || nameCtrl.valid"
     >
     @if (nameCtrl.touched && nameCtrl.invalid) {
-      <p class="text-xs text-red-500 mt-1">
+      <p class="text-[11px] text-red-400 mt-1.5 font-light">
         @if (nameCtrl.hasError('required')) {
           El nombre es obligatorio
         } @else if (nameCtrl.hasError('minlength')) {
@@ -63,19 +63,19 @@
 
   <!-- Phone -->
   <div>
-    <label for="clientPhone" class="block text-xs tracking-wider text-gray-500 mb-1.5">NÚMERO DE CELULAR</label>
+    <label for="clientPhone" class="block text-[10px] tracking-[0.15em] text-gray-400 font-medium mb-2">NÚMERO DE CELULAR</label>
     <input
       id="clientPhone"
       formControlName="clientPhone"
       type="tel"
       autocomplete="tel"
       placeholder="Ej: 77712345"
-      class="w-full px-4 py-3 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all"
-      [class.border-red-400]="phoneCtrl.touched && phoneCtrl.invalid"
+      class="w-full px-4 py-3.5 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black transition-all duration-200 placeholder:text-gray-300"
+      [class.border-red-300]="phoneCtrl.touched && phoneCtrl.invalid"
       [class.border-gray-200]="!phoneCtrl.touched || phoneCtrl.valid"
     >
     @if (phoneCtrl.touched && phoneCtrl.invalid) {
-      <p class="text-xs text-red-500 mt-1">
+      <p class="text-[11px] text-red-400 mt-1.5 font-light">
         @if (phoneCtrl.hasError('required')) {
           El número de celular es obligatorio
         } @else if (phoneCtrl.hasError('pattern')) {
@@ -87,7 +87,7 @@
 
   <!-- Submit error -->
   @if (submitError()) {
-    <div class="bg-red-50 text-red-600 text-sm rounded-lg px-4 py-3 text-center">
+    <div class="bg-red-50 text-red-500 text-xs rounded-xl px-4 py-3.5 text-center font-light">
       {{ submitError() }}
     </div>
   }
@@ -96,10 +96,10 @@
   <button
     type="submit"
     [disabled]="isSubmitting()"
-    class="w-full py-3.5 bg-black text-white text-sm tracking-wider rounded-lg hover:bg-gray-900 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+    class="w-full py-4 bg-black text-white text-xs tracking-[0.18em] rounded-xl hover:bg-gray-900 hover:shadow-lg transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none flex items-center justify-center gap-2.5 font-medium"
   >
     @if (isSubmitting()) {
-      <div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+      <div class="w-4 h-4 border-[1.5px] border-white/30 border-t-white rounded-full animate-spin"></div>
       PROCESANDO...
     } @else {
       CONFIRMAR RESERVA
