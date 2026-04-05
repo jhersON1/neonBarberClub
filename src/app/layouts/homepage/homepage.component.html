@@ -91,13 +91,57 @@
     </div>
   </section>
 
-  <section id="reservar" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
-    <app-booking></app-booking>
-  </section>
+  @defer (on viewport; prefetch on idle) {
+    <section id="reservar" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
+      <app-booking />
+    </section>
+  } @placeholder {
+    <section id="reservar" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
+      <div class="block w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto">
+          <div class="text-center mb-10 sm:mb-14">
+            <h2 class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light tracking-[0.2em] uppercase">
+              Reserva tu cita
+            </h2>
+            <div class="w-8 h-[1.5px] bg-black mx-auto mt-4"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  } @loading (minimum 200ms) {
+    <section class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
+      <div class="max-w-5xl mx-auto text-center">
+        <h2 class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light tracking-[0.2em] uppercase">
+          Reserva tu cita
+        </h2>
+        <div class="w-8 h-[1.5px] bg-black mx-auto mt-4 mb-10"></div>
+        <div class="w-6 h-6 border-2 border-black border-t-transparent rounded-full animate-spin mx-auto"></div>
+      </div>
+    </section>
+  }
 
-  <section id="ubicacion" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
-    <app-location></app-location>
-  </section>
+  @defer (on viewport; prefetch on idle) {
+    <section id="ubicacion" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <app-location />
+    </section>
+  } @placeholder {
+    <section id="ubicacion" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <div class="max-w-6xl mx-auto text-center">
+        <h2 class="text-xl sm:text-2xl md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-light tracking-wider">
+          VISÍTANOS
+        </h2>
+      </div>
+    </section>
+  } @loading (minimum 200ms) {
+    <section class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <div class="max-w-6xl mx-auto text-center">
+        <h2 class="text-xl sm:text-2xl md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-light tracking-wider">
+          VISÍTANOS
+        </h2>
+        <div class="w-6 h-6 border-2 border-black border-t-transparent rounded-full animate-spin mx-auto mt-8"></div>
+      </div>
+    </section>
+  }
 
   <footer class="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white border-t border-black/5">
     <app-footer></app-footer>
