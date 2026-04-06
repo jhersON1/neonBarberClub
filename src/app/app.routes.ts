@@ -1,9 +1,10 @@
 import { Routes } from '@angular/router';
+import { HomepageComponent } from './layouts/homepage/homepage.component';
 
 export const routes: Routes = [
     {
         path: '',
-        loadComponent: () => import('./layouts/homepage/homepage.component'),
+        component: HomepageComponent,
         pathMatch: 'full'
     },
     {
