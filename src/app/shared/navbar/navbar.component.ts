@@ -30,7 +30,7 @@ export class NavbarComponent {
     });
   }
 
-  @HostListener('window:scroll', ['$event'])
+  @HostListener('window:scroll')
   onScroll() {
     if (this.isMenuOpen) {
       window.scrollTo(0, 0);

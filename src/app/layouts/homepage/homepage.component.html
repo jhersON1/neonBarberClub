@@ -6,6 +6,52 @@
     <app-hero-video></app-hero-video>
   </section>
 
+  <!-- Experience Scroll Animation (GSAP) -->
+  <section #scrollContainer class="bg-white relative h-[180vh]">
+    <div class="sticky top-0 h-screen w-full overflow-hidden bg-white flex items-center justify-center pointer-events-none">
+      
+      <!-- Contenedor centralizado y estructurado (Flex split) -->
+      <div class="relative w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 h-full">
+        
+        <!-- Textos (Abajo en mobile, Izquierda en desktop) -->
+        <div class="w-full md:w-1/2 relative h-[250px] md:h-[400px] order-2 md:order-1 flex items-center">
+          
+          <div #text1 class="absolute inset-0 flex flex-col justify-center opacity-0 text-center md:text-left pointer-events-auto">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-black mb-3 sm:mb-4 tracking-wider">
+              PRECISIÓN<br>EN CADA DETALLE
+            </h2>
+            <p class="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed max-w-md mx-auto md:mx-0">
+              Combinamos técnicas tradicionales de barbería con un estándar moderno y exclusivo.
+            </p>
+          </div>
+
+          <div #text3 class="absolute inset-0 flex flex-col justify-center opacity-0 text-center md:text-left pointer-events-auto">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-black mb-3 sm:mb-4 tracking-wider">
+              EXPERIENCIA<br>ÚNICA
+            </h2>
+            <p class="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mb-6 max-w-md mx-auto md:mx-0">
+              Ven y vive el verdadero estilo en Neon Barber Club. Un ambiente pensado para ti.
+            </p>
+            <div>
+              <button
+                (click)="scrollToSection('reservar')"
+                class="px-6 sm:px-8 py-3 sm:py-4 border border-black bg-transparent text-black hover:bg-black hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 focus:ring-offset-white font-medium tracking-wide">
+                RESERVAR AHORA
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Canvas (Arriba en mobile, Derecha en desktop) -->
+        <div class="w-full md:w-1/2 flex items-center justify-center order-1 md:order-2 pointer-events-none">
+          <canvas #frameCanvas class="w-full max-w-[250px] sm:max-w-[350px] md:max-w-full h-auto max-h-[50vh] md:max-h-[75vh] object-contain drop-shadow-2xl" width="1080" height="1080"></canvas>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- Services -->
   <section id="servicios" class="bg-white py-12 sm:py-16 md:py-14 lg:py-16 xl:py-20 2xl:py-24 px-4 sm:px-6 lg:px-8" aria-labelledby="servicios-heading">
     <div class="container mx-auto max-w-[1400px]">
@@ -55,38 +101,6 @@
             <span itemprop="price">20</span><span itemprop="priceCurrency" content="BOB">Bs</span>
           </p>
         </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Features -->
-  <section class="py-12 sm:py-16 md:py-14 lg:py-16 xl:py-20 2xl:py-24 px-4 sm:px-6 lg:px-8 bg-black text-white">
-    <div class="container mx-auto max-w-[1400px]">
-      <div class="grid md:grid-cols-2 gap-8 sm:gap-12 md:gap-8 lg:gap-10 xl:gap-16 items-center max-w-6xl mx-auto">
-        <div class="max-w-xl">
-          <h2
-            class="text-xl sm:text-2xl md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-light mb-4 sm:mb-6 md:mb-4 lg:mb-6 xl:mb-8 tracking-wider">
-            EXPERIENCIA ÚNICA</h2>
-          <div class="space-y-4 sm:space-y-6 md:space-y-3 lg:space-y-4 xl:space-y-6 text-gray-300">
-            <p class="text-sm sm:text-base md:text-xs lg:text-sm xl:text-base 2xl:text-lg">En Neon Barber Club combinamos técnicas tradicionales de barbería con un ambiente moderno y exclusivo. Cada corte es una obra de arte personalizada para realzar tu estilo único.</p>
-            <button
-              (click)="scrollToSection('servicios')"
-              class="w-full sm:w-auto px-6 sm:px-8 py-3 md:px-5 md:py-2.5 lg:px-6 lg:py-3 xl:px-8 xl:py-4 2xl:px-10 2xl:py-5 border border-white hover:bg-white hover:text-black transition-all mt-4 sm:mt-6 md:mt-4 lg:mt-6 xl:mt-8 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black">
-              CONOCE MÁS
-            </button>
-          </div>
-        </div>
-        <div class="aspect-square sm:aspect-[4/3] md:aspect-square bg-gray-900 mt-8 md:mt-0 relative overflow-hidden">
-          <img src="neonBarberBackground.webp" 
-               alt="Interior moderno de Neon Barber Club en Santa Cruz - Ambiente exclusivo con iluminación neón" 
-               title="Interior Neon Barber Club - Experiencia única en barbería"
-               loading="lazy"
-               decoding="async"
-               width="600"
-               height="600"
-               fetchpriority="low"
-               class="w-full h-full object-cover absolute inset-0">
-        </div>
       </div>
     </div>
   </section>
