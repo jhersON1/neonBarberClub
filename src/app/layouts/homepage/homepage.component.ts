@@ -65,7 +65,7 @@ export class HomepageComponent {
     for (let i = 1; i <= this.frameCount; i++) {
       const img = new Image();
       const frameNum = i.toString().padStart(3, '0');
-      img.src = `machineFrames/fotograma_${frameNum}.png`;
+      img.src = `machineFrames/fotograma_${frameNum}.webp`;
       this.images.push(img);
     }
 
