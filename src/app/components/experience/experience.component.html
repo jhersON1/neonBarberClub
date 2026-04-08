@@ -1,0 +1,45 @@
+<!-- Experience Scroll Animation (GSAP) -->
+<section #scrollContainer class="bg-white relative h-[180vh]">
+  <div class="sticky top-0 h-screen w-full overflow-hidden bg-white flex items-center justify-center pointer-events-none">
+    
+    <!-- Centralized and structured container (Flex split) -->
+    <div class="relative w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 h-full">
+      
+      <!-- Text Sections (Bottom on mobile, Left on desktop) -->
+      <div class="w-full md:w-1/2 relative h-[250px] md:h-[400px] order-2 md:order-1 flex items-center">
+        
+        <div #text1 class="absolute inset-0 flex flex-col justify-center opacity-0 text-center md:text-left pointer-events-auto">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-black mb-3 sm:mb-4 tracking-wider">
+            PRECISIÓN<br>EN CADA DETALLE
+          </h2>
+          <p class="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed max-w-md mx-auto md:mx-0">
+            Combinamos técnicas tradicionales de barbería con un estándar moderno y exclusivo.
+          </p>
+        </div>
+
+        <div #text3 class="absolute inset-0 flex flex-col justify-center opacity-0 text-center md:text-left pointer-events-auto">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-black mb-3 sm:mb-4 tracking-wider">
+            EXPERIENCIA<br>ÚNICA
+          </h2>
+          <p class="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mb-6 max-w-md mx-auto md:mx-0">
+            Ven y vive el verdadero estilo en Neon Barber Club. Un ambiente pensado para ti.
+          </p>
+          <div>
+            <button
+              (click)="onReserveClick()"
+              class="px-6 sm:px-8 py-3 sm:py-4 border border-black bg-transparent text-black hover:bg-black hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 focus:ring-offset-white font-medium tracking-wide">
+              RESERVAR AHORA
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Canvas Area (Top on mobile, Right on desktop) -->
+      <div class="w-full md:w-1/2 flex items-center justify-center order-1 md:order-2 pointer-events-none">
+        <canvas #frameCanvas class="w-full max-w-[250px] sm:max-w-[350px] md:max-w-full h-auto max-h-[50vh] md:max-h-[75vh] object-contain drop-shadow-2xl" width="1080" height="1080"></canvas>
+      </div>
+
+    </div>
+  </div>
+</section>
