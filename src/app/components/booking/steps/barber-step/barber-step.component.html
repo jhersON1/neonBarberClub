@@ -2,7 +2,7 @@
 @if (isLoading()) {
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
     @for (i of [1, 2]; track i) {
-      <div class="animate-pulse bg-gray-50 rounded-2xl h-36"></div>
+      <div class="animate-pulse bg-gray-50 rounded-none h-36"></div>
     }
   </div>
 }
@@ -18,7 +18,7 @@
     <p class="text-gray-400 text-sm mb-5">{{ error() }}</p>
     <button
       (click)="retryRequested.emit()"
-      class="px-6 py-2.5 border border-gray-200 text-xs tracking-[0.12em] rounded-xl hover:border-black hover:bg-black hover:text-white transition-all duration-300"
+      class="px-6 py-2.5 border border-gray-200 text-xs tracking-[0.12em] rounded-none hover:border-black hover:bg-black hover:text-white transition-all duration-300"
     >REINTENTAR</button>
   </div>
 }
@@ -34,7 +34,7 @@
       <button
         type="button"
         (click)="onSelect(barber)"
-        class="group relative text-left p-5 sm:p-6 rounded-2xl border transition-all duration-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-black/10 focus:ring-offset-2"
+        class="group relative text-left p-5 sm:p-6 rounded-none border transition-all duration-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-black/10 focus:ring-offset-2"
         [class.border-black]="selectedBarber()?.id === barber.id"
         [class.shadow-md]="selectedBarber()?.id === barber.id"
         [class.border-gray-100]="selectedBarber()?.id !== barber.id"
