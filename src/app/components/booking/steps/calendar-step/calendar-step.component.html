@@ -5,7 +5,7 @@
       type="button"
       (click)="previousMonth()"
       [disabled]="!canGoPrevious()"
-      class="w-9 h-9 rounded-xl flex items-center justify-center hover:bg-gray-100 transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed"
+      class="w-9 h-9 rounded-none flex items-center justify-center hover:bg-gray-100 transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed"
       aria-label="Mes anterior"
     >
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -20,7 +20,7 @@
     <button
       type="button"
       (click)="nextMonth()"
-      class="w-9 h-9 rounded-xl flex items-center justify-center hover:bg-gray-100 transition-all duration-200"
+      class="w-9 h-9 rounded-none flex items-center justify-center hover:bg-gray-100 transition-all duration-200"
       aria-label="Mes siguiente"
     >
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -45,7 +45,7 @@
         type="button"
         [disabled]="!day.isCurrentMonth || day.isPast"
         (click)="onDateClick(day)"
-        class="relative aspect-square flex items-center justify-center text-xs sm:text-sm rounded-xl transition-all duration-200 hover:bg-gray-50 focus:outline-none"
+        class="relative aspect-square flex items-center justify-center text-xs sm:text-sm rounded-none transition-all duration-200 hover:bg-gray-50 focus:outline-none"
         [class.text-gray-200]="(!day.isCurrentMonth || (day.isPast && day.isCurrentMonth)) && !day.isToday"
         [class.cursor-not-allowed]="!day.isCurrentMonth || day.isPast"
         [class.bg-black]="day.dateString === selectedDate()"
@@ -85,7 +85,7 @@
           <button
             type="button"
             (click)="onTimeClick(slot)"
-            class="py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm tracking-wider border transition-all duration-200 hover:border-gray-300 focus:outline-none"
+            class="py-2.5 sm:py-3 rounded-none text-xs sm:text-sm tracking-wider border transition-all duration-200 hover:border-gray-300 focus:outline-none"
             [class.border-black]="slot === selectedTime()"
             [class.bg-black]="slot === selectedTime()"
             [class.text-white]="slot === selectedTime()"
