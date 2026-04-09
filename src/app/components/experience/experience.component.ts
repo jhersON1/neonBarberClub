@@ -1,8 +1,4 @@
 import { Component, ChangeDetectionStrategy, ElementRef, viewChild, afterNextRender, output } from '@angular/core';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: 'app-experience',
@@ -13,10 +9,8 @@ gsap.registerPlugin(ScrollTrigger);
 })
 export class ExperienceComponent {
 
-  /** Reference to the container element driving the GSAP scroll animation. */
   scrollContainer = viewChild<ElementRef<HTMLElement>>('scrollContainer');
-  
-  /** Reference to the canvas element where the animation frames are rendered. */
+
   frameCanvas = viewChild<ElementRef<HTMLCanvasElement>>('frameCanvas');
   
   /** Reference to the first overlay text element in the animation sequence. */
@@ -45,9 +39,10 @@ export class ExperienceComponent {
 
   /**
    * Preloads all animation frames and initializes the GSAP scroll triggers.
+   * GSAP is dynamically imported to avoid adding ~200KB to the initial bundle.
    * This logic is executed only in the browser context after the initial render.
    */
-  private initPreloadAndGsap(): void {
+  private async initPreloadAndGsap(): Promise<void> {
     for (let i = 1; i <= this.frameCount; i++) {
       const img = new Image();
       const frameNum = i.toString().padStart(3, '0');
@@ -72,6 +67,10 @@ export class ExperienceComponent {
     const t3 = this.text3()?.nativeElement;
 
     if (!container || !t1 || !t3) return;
+
+    const { gsap } = await import('gsap');
+    const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+    gsap.registerPlugin(ScrollTrigger);
 
     const tl = gsap.timeline({
       scrollTrigger: {

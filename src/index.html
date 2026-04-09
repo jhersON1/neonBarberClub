@@ -77,11 +77,16 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"></noscript>
 
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="favicon.ico">
   <link rel="canonical" href="https://neonbarberclub.com">
+
+  <!-- Preload LCP poster image for instant visibility -->
+  <link rel="preload" as="image" href="neonBarberBackground.webp" fetchpriority="high">
 
   <!-- DNS prefetch para recursos externos -->
   <link rel="dns-prefetch" href="//calendar.google.com">
@@ -93,7 +98,7 @@
 
   <meta http-equiv="x-dns-prefetch-control" content="on">
 
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+
 </head>
 
 <body>

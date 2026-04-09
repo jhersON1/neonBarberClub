@@ -1,58 +1,25 @@
 <div class="relative w-full">
 
-    @if (isMobile()) {
-        <div class="h-[calc(100vh-80px)] sm:h-[calc(100vh-96px)] bg-white">
-            <video #videoElement 
-                   playsinline 
-                   autoplay 
-                   loop 
-                   muted 
-                   preload="metadata"
-                   fetchpriority="high"
-                   aria-label="Video promocional de Neon Barber Club mostrando cortes profesionales"
-                   class="w-full h-full object-cover"
-                   (error)="onVideoError($event)">
-                <source src="barber-hero.mp4" type="video/mp4">
-                <p>Tu navegador no soporta videos HTML5. <a href="barber-hero.mp4">Descargar video</a>.</p>
-            </video>
-        </div>
-    }
-    
-    @if (isDesktop()) {
-        <div class="bg-white">
-            <video #videoElement 
-                   playsinline 
-                   autoplay 
-                   loop 
-                   muted 
-                   preload="metadata"
-                   fetchpriority="high"
-                   aria-label="Video promocional de Neon Barber Club mostrando cortes profesionales"
-                   class="w-full"
-                   (error)="onVideoError($event)">
-                <source src="barber-hero.mp4" type="video/mp4">
-                <p>Tu navegador no soporta videos HTML5. <a href="barber-hero.mp4">Descargar video</a>.</p>
-            </video>
-        </div>
-    }
-    
-    @if (isUltrawide()) {
-        <div class="bg-white">
-            <video #videoElement 
-                   playsinline 
-                   autoplay 
-                   loop 
-                   muted 
-                   preload="metadata"
-                   fetchpriority="high"
-                   aria-label="Video promocional de Neon Barber Club mostrando cortes profesionales"
-                   class="w-full max-w-screen-3xl mx-auto"
-                   (error)="onVideoError($event)">
-                <source src="barber-hero.mp4" type="video/mp4">
-                <p>Tu navegador no soporta videos HTML5. <a href="barber-hero.mp4">Descargar video</a>.</p>
-            </video>
-        </div>
-    }
+    <!-- Single video element always in DOM — CSS handles responsive sizing -->
+    <div class="h-[calc(100vh-80px)] sm:h-[calc(100vh-96px)] md:h-auto bg-white">
+        <video #videoElement 
+               playsinline 
+               autoplay 
+               loop 
+               muted 
+               preload="metadata"
+               poster="neonBarberHero.webp"
+               fetchpriority="high"
+               width="1920"
+               height="1080"
+               aria-label="Video promocional de Neon Barber Club mostrando cortes profesionales"
+               class="w-full h-full md:h-auto object-cover md:object-contain 2xl:max-w-screen-3xl 2xl:mx-auto"
+               style="aspect-ratio: 16/9;"
+               (error)="onVideoError($event)">
+            <source src="barber-hero-faststart.mp4" type="video/mp4">
+            <p>Tu navegador no soporta videos HTML5. <a href="barber-hero-faststart.mp4">Descargar video</a>.</p>
+        </video>
+    </div>
 
     <div class="absolute inset-0 flex items-end md:items-start p-4 md:p-8 lg:p-12 2xl:p-16 4xl:p-24">
         <div class="inline-flex flex-col md:w-1/2 2xl:w-1/3 md:pt-20 lg:pt-24">

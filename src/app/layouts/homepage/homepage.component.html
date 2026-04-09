@@ -6,7 +6,19 @@
     <app-hero-video></app-hero-video>
   </section>
 
-  <app-experience (scrollTo)="scrollToSection($event)"></app-experience>
+  @defer (on viewport; prefetch on idle) {
+    <app-experience (scrollTo)="scrollToSection($event)"></app-experience>
+  } @placeholder {
+    <section class="bg-white relative h-[180vh]">
+      <div class="sticky top-0 h-screen w-full flex items-center justify-center">
+        <div class="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-black tracking-wider">
+            PRECISIÓN<br>EN CADA DETALLE
+          </h2>
+        </div>
+      </div>
+    </section>
+  }
 
   <app-services></app-services>
 
