@@ -6,152 +6,21 @@
     <app-hero-video></app-hero-video>
   </section>
 
-  <!-- Experience Scroll Animation (GSAP) -->
-  <section #scrollContainer class="bg-white relative h-[180vh]">
-    <div class="sticky top-0 h-screen w-full overflow-hidden bg-white flex items-center justify-center pointer-events-none">
-      
-      <!-- Contenedor centralizado y estructurado (Flex split) -->
-      <div class="relative w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 h-full">
-        
-        <!-- Textos (Abajo en mobile, Izquierda en desktop) -->
-        <div class="w-full md:w-1/2 relative h-[250px] md:h-[400px] order-2 md:order-1 flex items-center">
-          
-          <div #text1 class="absolute inset-0 flex flex-col justify-center opacity-0 text-center md:text-left pointer-events-auto">
-            <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-black mb-3 sm:mb-4 tracking-wider">
-              PRECISIÓN<br>EN CADA DETALLE
-            </h2>
-            <p class="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed max-w-md mx-auto md:mx-0">
-              Combinamos técnicas tradicionales de barbería con un estándar moderno y exclusivo.
-            </p>
-          </div>
-
-          <div #text3 class="absolute inset-0 flex flex-col justify-center opacity-0 text-center md:text-left pointer-events-auto">
-            <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-black mb-3 sm:mb-4 tracking-wider">
-              EXPERIENCIA<br>ÚNICA
-            </h2>
-            <p class="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mb-6 max-w-md mx-auto md:mx-0">
-              Ven y vive el verdadero estilo en Neon Barber Club. Un ambiente pensado para ti.
-            </p>
-            <div>
-              <button
-                (click)="scrollToSection('reservar')"
-                class="px-6 sm:px-8 py-3 sm:py-4 border border-black bg-transparent text-black hover:bg-black hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 focus:ring-offset-white font-medium tracking-wide">
-                RESERVAR AHORA
-              </button>
-            </div>
-          </div>
-
+  @defer (on viewport; prefetch on idle) {
+    <app-experience (scrollTo)="scrollToSection($event)"></app-experience>
+  } @placeholder {
+    <section class="bg-white relative h-[180vh]">
+      <div class="sticky top-0 h-screen w-full flex items-center justify-center">
+        <div class="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-black tracking-wider">
+            PRECISIÓN<br>EN CADA DETALLE
+          </h2>
         </div>
-
-        <!-- Canvas (Arriba en mobile, Derecha en desktop) -->
-        <div class="w-full md:w-1/2 flex items-center justify-center order-1 md:order-2 pointer-events-none">
-          <canvas #frameCanvas class="w-full max-w-[250px] sm:max-w-[350px] md:max-w-full h-auto max-h-[50vh] md:max-h-[75vh] object-contain drop-shadow-2xl" width="1080" height="1080"></canvas>
-        </div>
-
       </div>
-    </div>
-  </section>
+    </section>
+  }
 
-  <!-- Services -->
-  <section id="servicios" class="bg-zinc-950 py-16 sm:py-20 md:py-24 lg:py-28 px-4 sm:px-6 lg:px-8" aria-labelledby="servicios-heading">
-    <div class="container mx-auto max-w-[1400px]">
-      
-      <!-- Encabezado de la sección -->
-      <div class="text-center mb-10 sm:mb-16">
-        <h2 id="servicios-heading" class="text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-wider mb-3">
-          SERVICIOS
-        </h2>
-        <p class="text-zinc-400 text-sm md:text-base font-light max-w-lg mx-auto">
-          Conecta con tu mejor versión. Nuestra oferta premium diseñada para ti.
-        </p>
-      </div>
-
-      <!-- Contenedor Principal (Fade Pagination) -->
-      <div class="relative w-full max-w-5xl mx-auto">
-        
-        <!-- Flecha Izquierda (Absoluta lateral) -->
-        <button (click)="prevPage()" 
-                class="absolute -left-2 sm:-left-12 md:-left-16 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-3 rounded-full border border-zinc-700 bg-zinc-900/90 text-white hover:bg-zinc-800 transition-all shadow-lg focus:outline-none" 
-                aria-label="Página anterior">
-          <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path></svg>
-        </button>
-
-        <!-- Flecha Derecha (Absoluta lateral) -->
-        <button (click)="nextPage()" 
-                class="absolute -right-2 sm:-right-12 md:-right-16 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-3 rounded-full border border-zinc-700 bg-zinc-900/90 text-white hover:bg-zinc-800 transition-all shadow-lg focus:outline-none" 
-                aria-label="Siguiente página">
-          <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path></svg>
-        </button>
-
-        <!-- Grilla de Tarjetas (Overlap Container) -->
-        <!-- Min-height para evitar que colapse al hacer fade out -->
-        <div class="relative w-full min-h-[450px] sm:min-h-[500px]">
-          @for (page of servicePages; track page.index) {
-            <div class="absolute inset-0 w-full transition-opacity duration-[1000ms] ease-in-out"
-                 [class.opacity-100]="currentPage === page.index"
-                 [class.pointer-events-auto]="currentPage === page.index"
-                 [class.opacity-0]="currentPage !== page.index"
-                 [class.pointer-events-none]="currentPage !== page.index">
-              
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 justify-center h-full px-8 sm:px-0">
-                
-                @for (service of page.items; track service.id) {
-                  <!-- SERVICIO DINÁMICO -->
-                  <article 
-                    [class.active-service]="selectedServiceId === service.id"
-                    (click)="selectService(service.id)"
-                    class="relative w-full max-w-[360px] lg:max-w-[400px] mx-auto group cursor-pointer" 
-                    itemscope itemtype="https://schema.org/Service">
-                    
-                    <div class="aspect-[4/5] bg-zinc-900 relative overflow-hidden">
-                      <img [src]="service.image" 
-                           [alt]="service.title" 
-                           [title]="service.title"
-                           loading="lazy"
-                           draggable="false"
-                           class="w-full h-full object-cover transition-transform duration-700 group-[.active-service]:scale-105 group-hover:scale-105"
-                           itemprop="image">
-                      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-                      
-                      <!-- Textos Superpuestos -->
-                      <div class="absolute bottom-0 left-0 right-0 p-6 flex flex-col justify-end">
-                        <div class="flex justify-between items-end gap-2">
-                          <div class="flex-1">
-                            <h3 class="text-2xl sm:text-3xl text-white font-light tracking-wide mb-1" itemprop="name">{{ service.title }}</h3>
-                            <div class="h-0 overflow-hidden transition-all duration-500 ease-in-out group-hover:h-auto group-[.active-service]:h-auto">
-                              <p class="text-sm text-zinc-300 font-light mt-2 opacity-0 transition-opacity duration-300 delay-100 group-hover:opacity-100 group-[.active-service]:opacity-100">{{ service.details }}</p>
-                            </div>
-                          </div>
-                          <p class="text-xl text-white font-medium bg-white/10 backdrop-blur-md px-3 py-1 rounded" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                            <span itemprop="price">{{ service.price }}</span> <span class="text-sm" itemprop="priceCurrency" content="BOB">Bs</span>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </article>
-                }
-              </div>
-            </div>
-          }
-        </div>
-
-        <!-- Paginación (Dots Inferiores) -->
-        <div class="flex justify-center items-center gap-3 mt-10">
-          @for (page of servicePages; track page.index) {
-            <button (click)="goToPage(page.index)" 
-                    class="h-2 rounded-full transition-all duration-500 focus:outline-none"
-                    [class.w-10]="currentPage === page.index"
-                    [class.bg-white]="currentPage === page.index"
-                    [class.w-3]="currentPage !== page.index"
-                    [class.bg-zinc-700]="currentPage !== page.index"
-                    [class.hover:bg-zinc-500]="currentPage !== page.index"
-                    [attr.aria-label]="'Ir a la página ' + (page.index + 1)"></button>
-          }
-        </div>
-
-      </div>
-    </div>
-  </section>
+  <app-services></app-services>
 
   @defer (on viewport; prefetch on idle) {
     <section id="reservar" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">

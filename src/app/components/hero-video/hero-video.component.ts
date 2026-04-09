@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Inject, PLATFORM_ID, ViewChild, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-hero-video',
@@ -12,66 +12,40 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Inject, 
 export class HeroVideoComponent implements AfterViewInit {
   @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>;
 
-  isMobile = signal(false);
-  isDesktop = signal(false);
-  isUltrawide = signal(false);
-
   constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-      this.detectScreenSize();
-      
       setTimeout(() => {
         this.initializeVideo();
       }, 100);
     }
   }
 
-  private detectScreenSize() {
-
-    if (typeof window !== 'undefined') {
-      const width = window.innerWidth;
-      
-      if (width < 768) {
-        this.isMobile.set(true);
-      } else if (width >= 768 && width < 1536) {
-        this.isDesktop.set(true);
-      } else {
-        this.isUltrawide.set(true);
-      }
-    }
-  }
-
   private initializeVideo() {
-    
     if (this.videoElement?.nativeElement) {
       this.optimizeVideo(this.videoElement.nativeElement);
     } else {
-      console.warn('Elemento video no encontrado, reintentando...');
+      console.warn('Video element not found, retrying...');
 
       setTimeout(() => {
         if (this.videoElement?.nativeElement) {
           this.optimizeVideo(this.videoElement.nativeElement);
         } else {
-          console.error('No se pudo encontrar el elemento video después de reintentar');
+          console.error('Could not find video element after retry');
         }
       }, 200);
     }
   }
 
   private optimizeVideo(video: HTMLVideoElement) {
-
     video.muted = true;
     video.playsInline = true;
     video.autoplay = true;
     video.loop = true;
-    video.preload = 'metadata';
+    video.preload = 'auto';
 
     let hasPlayed = false;
-    
-    const deviceType = this.isMobile() ? 'móvil' : 
-                      this.isDesktop() ? 'desktop' : 'ultrawide';
 
     const tryPlay = async () => {
       if (hasPlayed) return;
@@ -79,12 +53,10 @@ export class HeroVideoComponent implements AfterViewInit {
       try {
         await video.play();
         hasPlayed = true;
-
       } catch (error) {
-
         setTimeout(() => {
           if (!hasPlayed) {
-            video.play().catch(e => console.warn('Segundo intento fallido:', e));
+            video.play().catch(e => console.warn('Second play attempt failed:', e));
           }
         }, 1000);
       }
@@ -99,22 +71,14 @@ export class HeroVideoComponent implements AfterViewInit {
     }
     
     video.addEventListener('error', (e) => {
-      console.error(`Error cargando video para ${deviceType}:`, e);
+      console.error('Error loading hero video:', e);
     });
 
     setTimeout(() => {
       if (!hasPlayed && video.paused) {
-        console.log('Intento de respaldo para reproducir video...');
         tryPlay();
       }
     }, 2000);
-  }
-
-
-  private playVideo(video: HTMLVideoElement) {
-    video.play().catch(error => {
-      console.error('Video play failed:', error);
-    });
   }
 
   onVideoError(event: Event) {
