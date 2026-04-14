@@ -49,24 +49,35 @@
                   itemscope itemtype="https://schema.org/Service">
                   
                   <div class="aspect-[4/5] bg-zinc-900 relative overflow-hidden">
-                    <img [src]="service.image" 
-                         [alt]="service.title" 
-                         [title]="service.title"
-                         width="400"
-                         height="500"
-                         loading="lazy"
-                         draggable="false"
-                         class="w-full h-full object-cover transition-transform duration-700 group-[.active-service]:scale-105 group-hover:scale-105"
-                         itemprop="image">
+                    @if (service.mainImage) {
+                      <img [src]="service.mainImage" 
+                           [alt]="service.name" 
+                           [title]="service.name"
+                           width="400"
+                           height="500"
+                           loading="lazy"
+                           draggable="false"
+                           class="w-full h-full object-cover transition-transform duration-700 group-[.active-service]:scale-105 group-hover:scale-105"
+                           itemprop="image">
+                    } @else {
+                      <div class="w-full h-full bg-zinc-800 transition-transform duration-700 group-[.active-service]:scale-105 group-hover:scale-105"></div>
+                    }
                     <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
                     
                     <!-- Overlay Texts -->
                     <div class="absolute bottom-0 left-0 right-0 p-6 flex flex-col justify-end">
                       <div class="flex justify-between items-end gap-2">
                         <div class="flex-1">
-                          <h3 class="text-2xl sm:text-3xl text-white font-light tracking-wide mb-1" itemprop="name">{{ service.title }}</h3>
+                          <h3 class="text-2xl sm:text-3xl text-white font-light tracking-wide mb-1" itemprop="name">{{ service.name }}</h3>
                           <div class="h-0 overflow-hidden transition-all duration-500 ease-in-out group-hover:h-auto group-[.active-service]:h-auto">
-                            <p class="text-sm text-zinc-300 font-light mt-2 opacity-0 transition-opacity duration-300 delay-100 group-hover:opacity-100 group-[.active-service]:opacity-100">{{ service.details }}</p>
+                            <p class="text-sm text-zinc-300 font-light mt-2 opacity-0 transition-opacity duration-300 delay-100 group-hover:opacity-100 group-[.active-service]:opacity-100">{{ service.description }}</p>
+                            
+                            @if (service.catalog && service.catalog.length > 0) {
+                              <button (click)="openCatalog($event, service)" 
+                                      class="mt-4 px-5 py-2 text-xs font-medium text-white border border-white/30 rounded-full hover:bg-white hover:text-black transition-colors duration-300 opacity-0 group-hover:opacity-100 group-[.active-service]:opacity-100">
+                                VER CATÁLOGO &rarr;
+                              </button>
+                            }
                           </div>
                         </div>
                         <p class="text-xl text-white font-medium bg-white/10 backdrop-blur-md px-3 py-1 rounded" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
@@ -99,3 +110,76 @@
     </div>
   </div>
 </section>
+
+<!-- Catalog Lightbox Modal -->
+@if (isCatalogModalOpen) {
+  <div class="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md transition-opacity duration-300">
+    
+    <!-- Close Button -->
+    <button (click)="closeCatalog()" class="absolute top-4 right-4 sm:top-6 sm:right-6 z-50 p-2 text-zinc-400 hover:text-white focus:outline-none transition-colors" aria-label="Cerrar catálogo">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+    </button>
+
+    <!-- Modal Content -->
+    <div class="relative w-full h-full max-w-6xl mx-auto flex flex-col justify-center items-center pt-20 pb-8 px-4 sm:px-12">
+      
+      <!-- Header -->
+      <div class="absolute top-6 left-0 right-0 text-center z-10 px-16">
+        <h3 class="text-xl sm:text-2xl text-white font-light tracking-wider">{{ selectedServiceTitle }}</h3>
+        <p class="text-zinc-400 text-sm mt-1">Catálogo de estilos</p>
+      </div>
+
+      <!-- Main Slider Area -->
+      <div class="relative w-full flex-1 max-h-[70vh] bg-transparent rounded-lg flex items-center justify-center overflow-hidden">
+        
+        <!-- Image Container -->
+        @for (item of selectedCatalog; track $index) {
+          <div class="absolute inset-0 w-full h-full flex flex-col items-center justify-center transition-opacity duration-500"
+               [class.opacity-100]="currentCatalogIndex === $index"
+               [class.opacity-0]="currentCatalogIndex !== $index"
+               [class.z-10]="currentCatalogIndex === $index"
+               [class.z-0]="currentCatalogIndex !== $index">
+            <img 
+                 [src]="item.imgUrl" 
+                 [alt]="item.name"
+                 class="max-w-full max-h-full object-contain rounded-md shadow-2xl"
+                 loading="lazy">
+          </div>
+        }
+
+        <!-- Arrows (only if more than 1 item) -->
+        @if (selectedCatalog.length > 1) {
+          <button (click)="prevCatalogImage($event)" class="absolute left-0 sm:left-4 z-20 p-2 sm:p-4 rounded-full text-white hover:bg-white/10 transition-all focus:outline-none">
+            <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path></svg>
+          </button>
+          
+          <button (click)="nextCatalogImage($event)" class="absolute right-0 sm:right-4 z-20 p-2 sm:p-4 rounded-full text-white hover:bg-white/10 transition-all focus:outline-none">
+            <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path></svg>
+          </button>
+        }
+      </div>
+
+      <!-- Caption & Dots -->
+      <div class="mt-8 text-center w-full max-w-2xl px-4">
+        <h4 class="text-xl sm:text-2xl text-white font-medium tracking-wide">{{ selectedCatalog[currentCatalogIndex]?.name }}</h4>
+        <p class="text-zinc-400 text-sm sm:text-base mt-2 max-w-md mx-auto">{{ selectedCatalog[currentCatalogIndex]?.description }}</p>
+        
+        @if (selectedCatalog.length > 1) {
+          <div class="flex justify-center gap-2 mt-6">
+            @for (item of selectedCatalog; track $index) {
+              <button (click)="currentCatalogIndex = $index" 
+                      class="h-1.5 rounded-full transition-all duration-300 focus:outline-none"
+                      [class.w-8]="$index === currentCatalogIndex"
+                      [class.bg-white]="$index === currentCatalogIndex"
+                      [class.w-2]="$index !== currentCatalogIndex"
+                      [class.bg-zinc-600]="$index !== currentCatalogIndex"
+                      [class.hover:bg-zinc-400]="$index !== currentCatalogIndex">
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+    </div>
+  </div>
+}
