@@ -20,6 +20,8 @@ interface CalendarDay {
   readonly isPast: boolean;
   /** Whether the date matches today. */
   readonly isToday: boolean;
+  /** Whether the date is closed (Wednesday). */
+  readonly isClosed: boolean;
 }
 
 /** Spanish month names for UI display. */
@@ -113,7 +115,7 @@ export class CalendarStepComponent {
 
   /** Handles a day-cell click. */
   onDateClick(day: CalendarDay): void {
-    if (!day.isCurrentMonth || day.isPast) return;
+    if (!day.isCurrentMonth || day.isPast || day.isClosed) return;
     this.dateChanged.emit(day.dateString);
   }
 
@@ -184,6 +186,7 @@ export class CalendarStepComponent {
       isCurrentMonth,
       isPast: date.getTime() < tomorrow.getTime(),
       isToday: date.getTime() === today.getTime(),
+      isClosed: date.getDay() === 3,
     };
   }
 
