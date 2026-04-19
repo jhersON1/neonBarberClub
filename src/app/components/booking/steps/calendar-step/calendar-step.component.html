@@ -43,11 +43,11 @@
     @for (day of calendarDays(); track day.dateString) {
       <button
         type="button"
-        [disabled]="!day.isCurrentMonth || day.isPast"
+        [disabled]="!day.isCurrentMonth || day.isPast || day.isClosed"
         (click)="onDateClick(day)"
         class="relative aspect-square flex items-center justify-center text-xs sm:text-sm rounded-none transition-all duration-200 hover:bg-gray-50 focus:outline-none"
-        [class.text-gray-200]="(!day.isCurrentMonth || (day.isPast && day.isCurrentMonth)) && !day.isToday"
-        [class.cursor-not-allowed]="!day.isCurrentMonth || day.isPast"
+        [class.text-gray-200]="(!day.isCurrentMonth || ((day.isPast || day.isClosed) && day.isCurrentMonth)) && !day.isToday"
+        [class.cursor-not-allowed]="!day.isCurrentMonth || day.isPast || day.isClosed"
         [class.bg-black]="day.dateString === selectedDate()"
         [class.text-white]="day.dateString === selectedDate()"
         [class.shadow-sm]="day.dateString === selectedDate()"
