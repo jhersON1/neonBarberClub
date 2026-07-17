@@ -1,24 +1,33 @@
 <div class="relative w-full">
 
-    <!-- Single video element always in DOM — CSS handles responsive sizing -->
     <div class="h-[calc(100vh-80px)] sm:h-[calc(100vh-96px)] md:h-auto bg-white">
+      @if (!videoFailed()) {
         <video #videoElement 
                playsinline 
                autoplay 
                loop 
                muted 
-               preload="metadata"
-               poster="neonBarberHero.webp"
-               fetchpriority="high"
+               preload="auto"
+               poster="neonBarberBackground.webp"
                width="1920"
                height="1080"
-               aria-label="Video promocional de Neon Barber Club mostrando cortes profesionales"
+               aria-hidden="true"
                class="w-full h-full md:h-auto object-cover md:object-contain 2xl:max-w-screen-3xl 2xl:mx-auto"
                style="aspect-ratio: 16/9;"
-               (error)="onVideoError($event)">
+               (error)="onVideoError()">
             <source src="barber-hero-faststart.mp4" type="video/mp4">
             <p>Tu navegador no soporta videos HTML5. <a href="barber-hero-faststart.mp4">Descargar video</a>.</p>
         </video>
+      } @else {
+        <img
+          src="neonBarberBackground.webp"
+          alt="Interior de Neon Barber Club, barbería en Plan 3 Mil"
+          width="1920"
+          height="1080"
+          fetchpriority="high"
+          class="w-full h-full md:h-auto object-cover md:object-contain 2xl:max-w-screen-3xl 2xl:mx-auto"
+          style="aspect-ratio: 16/9;">
+      }
     </div>
 
     <div class="absolute inset-0 flex items-end md:items-start p-4 md:p-8 lg:p-12 2xl:p-16 4xl:p-24">

@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, HostListener, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, HostListener, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
+import { scrollToSection } from '../utils/scroll-to-section';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,7 @@ import { filter } from 'rxjs';
   }
 })
 export class NavbarComponent implements OnInit {
-  isMenuOpen = false;
+  readonly isMenuOpen = signal(false);
 
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
@@ -22,8 +23,13 @@ export class NavbarComponent implements OnInit {
   onDocumentClick(event: MouseEvent) {
     const target = event.target as HTMLElement;
     if (!target.closest('nav')) {
-      this.isMenuOpen = false;
+      this.isMenuOpen.set(false);
     }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    this.isMenuOpen.set(false);
   }
 
   ngOnInit() {
@@ -33,8 +39,12 @@ export class NavbarComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe(() => {
-        this.isMenuOpen = false;
+        this.isMenuOpen.set(false);
       });
+  }
+
+  toggleMenu(): void {
+    this.isMenuOpen.update((isOpen) => !isOpen);
   }
 
   scrollToSection(sectionId: string, event?: Event) {
@@ -42,18 +52,7 @@ export class NavbarComponent implements OnInit {
       event.preventDefault();
     }
     
-    this.isMenuOpen = false;
-    
-    const targetElement = document.getElementById(sectionId);
-
-    if (targetElement) {
-      const navbarHeight = 80;
-      const elementPosition = targetElement.offsetTop - navbarHeight;
-      
-      window.scrollTo({
-        top: elementPosition,
-        behavior: 'smooth'
-      });
-    }
+    this.isMenuOpen.set(false);
+    scrollToSection(sectionId);
   }
 }

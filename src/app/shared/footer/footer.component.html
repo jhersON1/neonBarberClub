@@ -7,35 +7,32 @@
     <div>
         <h3 class="text-sm font-medium mb-4 md:text-xs lg:text-sm xl:text-base">SERVICIOS</h3>
         <ul class="space-y-2 text-sm text-gray-600 md:text-xs lg:text-sm xl:text-base">
-            <li><button (click)="scrollToSection('servicios')" class="hover:text-neon-blue-500 transition-colors text-left">Corte - 50Bs</button></li>
-            <li><button (click)="scrollToSection('servicios')" class="hover:text-neon-blue-500 transition-colors text-left">Barba y Ceja - 20Bs</button></li>
-            <li><button (click)="scrollToSection('reservar')" class="hover:text-neon-blue-500 transition-colors text-left">Reservar cita</button></li>
+            <li><button type="button" (click)="scrollToSection('servicios')" class="hover:text-neon-blue-500 transition-colors text-left">Cortes y estilos</button></li>
+            <li><button type="button" (click)="scrollToSection('servicios')" class="hover:text-neon-blue-500 transition-colors text-left">Barba y cejas</button></li>
+            <li><button type="button" (click)="scrollToSection('reservar')" class="hover:text-neon-blue-500 transition-colors text-left">Reservar cita</button></li>
         </ul>
     </div>
 
     <div>
         <h3 class="text-sm font-medium mb-4 md:text-xs lg:text-sm xl:text-base">CONTACTO</h3>
         <ul class="space-y-2 text-sm text-gray-600 md:text-xs lg:text-sm xl:text-base">
-            <li>+591 77326305</li>
-            <li>Av. Principal Plan 3 Mil</li>
-            <li>Santa Cruz de la Sierra</li>
+            <li><a [href]="links.phone" class="hover:text-neon-blue-500 transition-colors">{{ business.phone.display }}</a></li>
+            <li><a [href]="business.googleMapsUrl" target="_blank" rel="noopener noreferrer" class="hover:text-neon-blue-500 transition-colors">{{ business.address.street }}</a></li>
+            <li>{{ business.address.locality }}</li>
         </ul>
     </div>
 
     <div>
         <h3 class="text-sm font-medium mb-4 md:text-xs lg:text-sm xl:text-base">HORARIOS</h3>
         <div class="space-y-2 text-sm text-gray-600 md:text-xs lg:text-sm xl:text-base">
-            <p>Lunes a Domingo (Miércoles Cerrado)</p>
-            <p>10:00 AM - 7:00 PM</p>
+            <p>{{ business.openingHours.display }}</p>
             <div class="mt-4 flex gap-4">
-                <a href="#" class="text-gray-600 hover:text-neon-blue-500 transition-colors">IG</a>
-                <a href="#" class="text-gray-600 hover:text-neon-blue-500 transition-colors">FB</a>
-                <a href="#" class="text-gray-600 hover:text-neon-blue-500 transition-colors">WA</a>
+                <a [href]="links.whatsapp" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-neon-blue-500 transition-colors" aria-label="Escribir a Neon Barber Club por WhatsApp">WHATSAPP</a>
             </div>
         </div>
     </div>
 </div>
 
 <div class="mt-16 pt-8 border-t border-black/5 text-center text-sm text-gray-600 md:text-xs lg:text-sm xl:text-base">
-    <p>© 2025 NEON BARBER CLUB. Todos los derechos reservados.</p>
+    <p>© {{ currentYear }} NEON BARBER CLUB. Todos los derechos reservados.</p>
 </div>

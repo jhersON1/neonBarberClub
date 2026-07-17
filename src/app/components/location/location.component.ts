@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { BUSINESS_CONFIG, BUSINESS_LINKS } from '../../core/config/business.config';
 
 @Component({
   selector: 'app-location',
@@ -11,20 +12,17 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   }
 })
 export class LocationComponent {
-  mapUrl: SafeResourceUrl;
+  readonly business = BUSINESS_CONFIG;
+  readonly links = BUSINESS_LINKS;
+  readonly mapUrl: SafeResourceUrl;
   
   constructor(private sanitizer: DomSanitizer) {
 
-    const lat = -17.828305;
-    const lng = -63.137408;
+    const lat = this.business.coordinates.latitude;
+    const lng = this.business.coordinates.longitude;
     
     const osmUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${lng-0.005},${lat-0.005},${lng+0.005},${lat+0.005}&layer=mapnik&marker=${lat},${lng}`;
     
     this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(osmUrl);
-  }
-
-  openDirections(): void {
-    const mapsUrl = 'https://www.google.com/maps/place/Neon+Barber+club/@-17.8282554,-63.1371069,19.83z/data=!4m6!3m5!1s0x93f1e7f18fac57d3:0x5f221055256b4872!8m2!3d-17.8282691!4d-63.1373726!16s%2Fg%2F11lv2gk8_q?entry=ttu&g_ep=EgoyMDI1MDcyOC4wIKXMDSoASAFQAw%3D%3D';
-    window.open(mapsUrl, '_blank');
   }
 }

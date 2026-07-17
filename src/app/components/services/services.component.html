@@ -14,16 +14,24 @@
 
     <!-- Main Container (Fade Pagination) -->
     <div class="relative w-full max-w-5xl mx-auto">
+      @if (isLoading) {
+        <p class="text-zinc-400 text-center py-20" role="status">Cargando servicios…</p>
+      } @else if (loadError) {
+        <div class="text-center py-16" role="alert">
+          <p class="text-zinc-300 mb-4">{{ loadError }}</p>
+          <button type="button" (click)="fetchServices(true)" class="px-5 py-2 border border-zinc-600 text-white hover:bg-white hover:text-black transition-colors">VOLVER A INTENTAR</button>
+        </div>
+      } @else if (servicePages.length > 0) {
       
       <!-- Left Arrow -->
-      <button (click)="prevPage()" 
+      <button type="button" (click)="prevPage()" [disabled]="servicePages.length <= 1"
               class="absolute -left-2 sm:-left-12 md:-left-16 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-3 rounded-full border border-zinc-700 bg-zinc-900/90 text-white hover:bg-zinc-800 transition-all shadow-lg focus:outline-none" 
               aria-label="Página anterior">
         <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path></svg>
       </button>
 
       <!-- Right Arrow -->
-      <button (click)="nextPage()" 
+      <button type="button" (click)="nextPage()" [disabled]="servicePages.length <= 1"
               class="absolute -right-2 sm:-right-12 md:-right-16 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-3 rounded-full border border-zinc-700 bg-zinc-900/90 text-white hover:bg-zinc-800 transition-all shadow-lg focus:outline-none" 
               aria-label="Siguiente página">
         <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path></svg>
@@ -31,21 +39,15 @@
 
       <!-- Card Grid (Overlap Container with min-height to avoid layout shifting on fade) -->
       <div class="relative w-full min-h-[450px] sm:min-h-[500px]">
-        @for (page of servicePages; track page.index) {
-          <div class="absolute inset-0 w-full transition-opacity duration-[1000ms] ease-in-out"
-               [class.opacity-100]="currentPage === page.index"
-               [class.pointer-events-auto]="currentPage === page.index"
-               [class.opacity-0]="currentPage !== page.index"
-               [class.pointer-events-none]="currentPage !== page.index">
+        @if (servicePages[currentPage]; as page) {
+          <div class="absolute inset-0 w-full transition-opacity duration-500 ease-in-out">
             
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 justify-center h-full px-8 sm:px-0">
               
               @for (service of page.items; track service.id) {
                 <!-- DYNAMIC SERVICE CARD -->
-                <article 
-                  [class.active-service]="selectedServiceId === service.id"
-                  (click)="selectService(service.id)"
-                  class="relative w-full max-w-[360px] lg:max-w-[400px] mx-auto group cursor-pointer" 
+                <article
+                  class="relative w-full max-w-[360px] lg:max-w-[400px] mx-auto group"
                   itemscope itemtype="https://schema.org/Service">
                   
                   <div class="aspect-[4/5] bg-zinc-900 relative overflow-hidden">
@@ -57,7 +59,7 @@
                            height="500"
                            loading="lazy"
                            draggable="false"
-                           class="w-full h-full object-cover transition-transform duration-700 group-[.active-service]:scale-105 group-hover:scale-105"
+                           class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                            itemprop="image">
                     } @else {
                       <div class="w-full h-full bg-zinc-800 transition-transform duration-700 group-[.active-service]:scale-105 group-hover:scale-105"></div>
@@ -66,15 +68,15 @@
                     
                     <!-- Overlay Texts -->
                     <div class="absolute bottom-0 left-0 right-0 p-6 flex flex-col justify-end">
-                      <div class="flex justify-between items-end gap-2">
+                      <div class="flex justify-between items-end gap-3">
                         <div class="flex-1">
                           <h3 class="text-2xl sm:text-3xl text-white font-light tracking-wide mb-1" itemprop="name">{{ service.name }}</h3>
-                          <div class="h-0 overflow-hidden transition-all duration-500 ease-in-out group-hover:h-auto group-[.active-service]:h-auto">
-                            <p class="text-sm text-zinc-300 font-light mt-2 opacity-0 transition-opacity duration-300 delay-100 group-hover:opacity-100 group-[.active-service]:opacity-100">{{ service.description }}</p>
+                          <div>
+                            <p class="text-sm text-zinc-300 font-light mt-2">{{ service.description }}</p>
                             
                             @if (service.catalog && service.catalog.length > 0) {
-                              <button (click)="openCatalog($event, service)" 
-                                      class="mt-4 px-5 py-2 text-xs font-medium text-white border border-white/30 rounded-full hover:bg-white hover:text-black transition-colors duration-300 opacity-0 group-hover:opacity-100 group-[.active-service]:opacity-100">
+                              <button type="button" (click)="openCatalog($event, service)"
+                                      class="mt-4 px-5 py-2 text-xs font-medium text-white border border-white/30 rounded-full hover:bg-white hover:text-black transition-colors duration-300">
                                 VER CATÁLOGO &rarr;
                               </button>
                             }
@@ -96,7 +98,7 @@
       <!-- Pagination Indicators (Bottom Dots) -->
       <div class="flex justify-center items-center gap-3 mt-10">
         @for (page of servicePages; track page.index) {
-          <button (click)="goToPage(page.index)" 
+          <button type="button" (click)="goToPage(page.index)"
                   class="h-2 rounded-full transition-all duration-500 focus:outline-none"
                   [class.w-10]="currentPage === page.index"
                   [class.bg-white]="currentPage === page.index"
@@ -106,6 +108,7 @@
                   [attr.aria-label]="'Ir a la página ' + (page.index + 1)"></button>
         }
       </div>
+      }
 
     </div>
   </div>
@@ -113,10 +116,11 @@
 
 <!-- Catalog Lightbox Modal -->
 @if (isCatalogModalOpen) {
-  <div class="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md transition-opacity duration-300">
+  <div class="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md transition-opacity duration-300"
+       role="dialog" aria-modal="true" aria-labelledby="catalog-title">
     
     <!-- Close Button -->
-    <button (click)="closeCatalog()" class="absolute top-4 right-4 sm:top-6 sm:right-6 z-50 p-2 text-zinc-400 hover:text-white focus:outline-none transition-colors" aria-label="Cerrar catálogo">
+    <button #closeButton type="button" (click)="closeCatalog()" class="absolute top-4 right-4 sm:top-6 sm:right-6 z-50 p-2 text-zinc-400 hover:text-white focus:outline-none transition-colors" aria-label="Cerrar catálogo">
       <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
     </button>
 
@@ -125,7 +129,7 @@
       
       <!-- Header -->
       <div class="absolute top-6 left-0 right-0 text-center z-10 px-16">
-        <h3 class="text-xl sm:text-2xl text-white font-light tracking-wider">{{ selectedServiceTitle }}</h3>
+        <h3 id="catalog-title" class="text-xl sm:text-2xl text-white font-light tracking-wider">{{ selectedServiceTitle }}</h3>
         <p class="text-zinc-400 text-sm mt-1">Catálogo de estilos</p>
       </div>
 
@@ -149,11 +153,11 @@
 
         <!-- Arrows (only if more than 1 item) -->
         @if (selectedCatalog.length > 1) {
-          <button (click)="prevCatalogImage($event)" class="absolute left-0 sm:left-4 z-20 p-2 sm:p-4 rounded-full text-white hover:bg-white/10 transition-all focus:outline-none">
+          <button type="button" (click)="prevCatalogImage($event)" aria-label="Imagen anterior" class="absolute left-0 sm:left-4 z-20 p-2 sm:p-4 rounded-full text-white hover:bg-white/10 transition-all focus:outline-none">
             <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path></svg>
           </button>
           
-          <button (click)="nextCatalogImage($event)" class="absolute right-0 sm:right-4 z-20 p-2 sm:p-4 rounded-full text-white hover:bg-white/10 transition-all focus:outline-none">
+          <button type="button" (click)="nextCatalogImage($event)" aria-label="Imagen siguiente" class="absolute right-0 sm:right-4 z-20 p-2 sm:p-4 rounded-full text-white hover:bg-white/10 transition-all focus:outline-none">
             <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path></svg>
           </button>
         }
@@ -167,7 +171,9 @@
         @if (selectedCatalog.length > 1) {
           <div class="flex justify-center gap-2 mt-6">
             @for (item of selectedCatalog; track $index) {
-              <button (click)="currentCatalogIndex = $index" 
+              <button type="button" (click)="currentCatalogIndex = $index"
+                      [attr.aria-label]="'Ver imagen ' + ($index + 1)"
+                      [attr.aria-pressed]="$index === currentCatalogIndex"
                       class="h-1.5 rounded-full transition-all duration-300 focus:outline-none"
                       [class.w-8]="$index === currentCatalogIndex"
                       [class.bg-white]="$index === currentCatalogIndex"

@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 
 import { API_ENDPOINTS } from '../constants/api.constants';
 import { BarberService, Barber, CreateReservationRequest } from '../models';
@@ -12,15 +12,29 @@ import { BarberService, Barber, CreateReservationRequest } from '../models';
 @Injectable({ providedIn: 'root' })
 export class BookingApiService {
   private readonly http = inject(HttpClient);
+  private servicesCache?: Observable<BarberService[]>;
+  private barbersCache?: Observable<Barber[]>;
 
   /** Fetches the list of active barber services. */
-  getActiveServices(): Observable<BarberService[]> {
-    return this.http.get<BarberService[]>(API_ENDPOINTS.ACTIVE_SERVICES);
+  getActiveServices(forceRefresh = false): Observable<BarberService[]> {
+    if (forceRefresh || !this.servicesCache) {
+      this.servicesCache = this.http
+        .get<BarberService[]>(API_ENDPOINTS.ACTIVE_SERVICES)
+        .pipe(shareReplay({ bufferSize: 1, refCount: false }));
+    }
+
+    return this.servicesCache;
   }
 
   /** Fetches the list of active barbers. */
-  getActiveBarbers(): Observable<Barber[]> {
-    return this.http.get<Barber[]>(API_ENDPOINTS.ACTIVE_BARBERS);
+  getActiveBarbers(forceRefresh = false): Observable<Barber[]> {
+    if (forceRefresh || !this.barbersCache) {
+      this.barbersCache = this.http
+        .get<Barber[]>(API_ENDPOINTS.ACTIVE_BARBERS)
+        .pipe(shareReplay({ bufferSize: 1, refCount: false }));
+    }
+
+    return this.barbersCache;
   }
 
   /**

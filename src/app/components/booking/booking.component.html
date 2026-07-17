@@ -8,30 +8,27 @@
     <div class="w-8 h-[1.5px] bg-black mx-auto mt-4"></div>
   </div>
 
-  <!-- ── Google Calendar (read-only availability preview) ──── -->
-  <div class="mb-12 sm:mb-16">
-    <p class="text-center text-gray-400 text-[11px] sm:text-xs mb-5 tracking-[0.15em] uppercase font-medium">
-      Consulta la disponibilidad
-    </p>
-    <div class="flex justify-center">
-      <div class="w-full max-w-3xl min-h-[320px] sm:min-h-[420px] lg:min-h-[500px]">
-        <iframe
-          [src]="calendarSrc()"
-          style="border: 0"
-          class="w-full h-[320px] sm:h-[420px] lg:h-[500px] rounded-none shadow-sm border border-gray-100"
-          frameborder="0"
-          scrolling="no"
-          title="Calendario de disponibilidad de citas de Neon Barber Club"
-          loading="lazy">
-        </iframe>
-      </div>
+  <section class="mb-12 sm:mb-16" aria-labelledby="public-calendar-heading">
+    <div class="text-center mb-5">
+      <h3 id="public-calendar-heading" class="text-xs sm:text-sm font-medium tracking-[0.15em] uppercase">
+        Disponibilidad general
+      </h3>
     </div>
-  </div>
 
-  <!-- ── Divider ────────────────────────────────────────────── -->
-  <div class="flex items-center justify-center gap-3 mb-12 sm:mb-16 max-w-xs mx-auto">
+    <div class="mx-auto w-full max-w-3xl min-h-[320px] sm:min-h-[420px] lg:min-h-[500px] border border-gray-100 bg-gray-50 shadow-sm">
+      <iframe
+        src="https://calendar.google.com/calendar/embed?src=4029010d62b455a6c54464f935e4c2abb45a5b3880a88512197b77aa474af2e0%40group.calendar.google.com&amp;ctz=America%2FLa_Paz&amp;mode=WEEK&amp;showTitle=0&amp;showPrint=0&amp;hl=es&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0"
+        class="block h-[320px] w-full sm:h-[420px] lg:h-[500px]"
+        title="Calendario general de horarios ocupados de Neon Barber Club"
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin">
+      </iframe>
+    </div>
+  </section>
+
+  <div class="flex items-center justify-center gap-3 mb-12 sm:mb-16 max-w-xs mx-auto" aria-hidden="true">
     <div class="flex-1 h-px bg-gray-200"></div>
-    <span class="text-[10px] tracking-[0.2em] text-gray-300 font-medium uppercase">Reservar</span>
+    <span class="text-[10px] tracking-[0.2em] text-gray-400 font-medium uppercase">Elige tu cita</span>
     <div class="flex-1 h-px bg-gray-200"></div>
   </div>
 
@@ -73,10 +70,12 @@
         <app-calendar-step
           [availableSlots]="availableSlots()"
           [isLoadingSlots]="isLoadingSlots()"
+          [availabilityError]="slotsError()"
           [selectedDate]="selectedDate()"
           [selectedTime]="selectedTime()"
           (dateChanged)="onDateChanged($event)"
-          (timeSelected)="onTimeSelected($event)" />
+          (timeSelected)="onTimeSelected($event)"
+          (retryRequested)="retryAvailability()" />
       </div>
     }
 
@@ -111,7 +110,7 @@
           a las
           <span class="font-medium text-black">{{ bookingSummary().time }}</span>,
           realiza un pago de
-          <span class="font-semibold text-black">15 Bs</span>.
+          <span class="font-semibold text-black">{{ business.booking.depositAmountBob }} Bs</span>.
         </p>
 
         <!-- QR & Payment Card -->
@@ -140,7 +139,7 @@
             GUARDAR QR
           </a>
 
-          <a href="https://wa.me/59177326305?text=Hola%2C%20acabo%20de%20realizar%20una%20pre-reserva.%20Les%20envío%20mi%20comprobante%20de%20pago."
+          <a [href]="links.whatsappPayment"
              target="_blank"
              rel="noopener noreferrer"
              class="inline-flex items-center justify-center gap-2 w-full px-5 py-2.5 border border-gray-200 text-[11px] tracking-[0.12em] font-medium rounded-none hover:border-black transition-all duration-300">
@@ -151,7 +150,7 @@
           </a>
 
           <p class="text-[10px] text-gray-400 mt-4 tracking-wider">
-            WhatsApp: <span class="font-medium text-gray-500">+591 77326305</span>
+            WhatsApp: <span class="font-medium text-gray-500">{{ business.phone.display }}</span>
           </p>
         </div>
 

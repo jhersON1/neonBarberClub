@@ -6,6 +6,8 @@ import { FooterComponent } from '../../shared/footer/footer.component';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 import { ExperienceComponent } from '../../components/experience/experience.component';
 import { ServicesComponent } from '../../components/services/services.component';
+import { LocalInfoComponent } from '../../components/local-info/local-info.component';
+import { scrollToSection } from '../../shared/utils/scroll-to-section';
 
 /**
  * Homepage component that serves as the main landing page for the application.
@@ -18,6 +20,7 @@ import { ServicesComponent } from '../../components/services/services.component'
     HeroVideoComponent,
     ExperienceComponent,
     ServicesComponent,
+    LocalInfoComponent,
     BookingComponent,
     LocationComponent,
     FooterComponent
@@ -26,24 +29,5 @@ import { ServicesComponent } from '../../components/services/services.component'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomepageComponent {
-
-  /**
-   * Smoothly scrolls the window to the specified section element, accounting
-   * for the fixed navigation bar offset.
-   *
-   * @param sectionId - The DOM ID of the target section.
-   */
-  scrollToSection(sectionId: string): void {
-    const targetElement = document.getElementById(sectionId);
-
-    if (targetElement) {
-      const navbarHeight = 80;
-      const elementPosition = targetElement.offsetTop - navbarHeight;
-      
-      window.scrollTo({
-        top: elementPosition,
-        behavior: 'smooth'
-      });
-    }
-  }
+  readonly scrollToSection = scrollToSection;
 }

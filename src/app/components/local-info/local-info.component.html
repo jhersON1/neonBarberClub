@@ -1,0 +1,56 @@
+<section id="conocenos" class="bg-white py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8" aria-labelledby="local-info-heading">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-20 items-start">
+      <div>
+        <p class="text-xs font-semibold tracking-[0.2em] text-neon-blue-500 uppercase mb-4">Barbería local</p>
+        <h2 id="local-info-heading" class="text-3xl sm:text-4xl lg:text-5xl font-light tracking-wide text-balance mb-6">
+          Barbería en Plan 3 Mil, Santa Cruz de la Sierra
+        </h2>
+        <p class="text-base sm:text-lg text-gray-600 leading-relaxed mb-5">
+          En Neon Barber Club combinamos precisión, asesoramiento de estilo y técnicas de barbería contemporánea para que cada corte se adapte a tu rostro, cabello y forma de vestir.
+        </p>
+        <p class="text-base text-gray-600 leading-relaxed mb-8">
+          Puedes consultar los servicios y precios vigentes, reservar un horario real y encontrar nuestra ubicación exacta sin salir de esta página.
+        </p>
+
+        <div class="grid sm:grid-cols-2 gap-4 mb-8">
+          <address class="not-italic border border-gray-100 p-5">
+            <span class="block text-xs font-semibold tracking-[0.15em] mb-2">UBICACIÓN</span>
+            <span class="text-sm text-gray-600 leading-relaxed">
+              {{ business.address.street }}<br>
+              {{ business.address.locality }}
+            </span>
+          </address>
+          <div class="border border-gray-100 p-5">
+            <span class="block text-xs font-semibold tracking-[0.15em] mb-2">HORARIOS</span>
+            <span class="text-sm text-gray-600 leading-relaxed">{{ business.openingHours.display }}.<br>Miércoles cerrado.</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href="#reservar" class="inline-flex justify-center px-6 py-3 bg-black text-white text-sm font-medium tracking-wider hover:bg-gray-900 transition-colors">
+            RESERVAR CITA
+          </a>
+          <a [href]="links.whatsapp" target="_blank" rel="noopener noreferrer" class="inline-flex justify-center px-6 py-3 border border-black text-black text-sm font-medium tracking-wider hover:bg-black hover:text-white transition-colors">
+            CONSULTAR POR WHATSAPP
+          </a>
+        </div>
+      </div>
+
+      <div aria-labelledby="faq-heading">
+        <h3 id="faq-heading" class="text-xl sm:text-2xl font-medium tracking-wide mb-6">Preguntas frecuentes</h3>
+        <div class="divide-y divide-gray-200 border-y border-gray-200">
+          @for (item of questions; track item.question) {
+            <details class="group py-5">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-5 text-base font-medium">
+                {{ item.question }}
+                <span aria-hidden="true" class="text-neon-blue-500 text-xl transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="pt-4 pr-8 text-sm sm:text-base text-gray-600 leading-relaxed">{{ item.answer }}</p>
+            </details>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

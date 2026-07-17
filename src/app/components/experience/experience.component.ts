@@ -1,118 +1,129 @@
-import { Component, ChangeDetectionStrategy, ElementRef, viewChild, afterNextRender, output } from '@angular/core';
+import {
+  afterNextRender,
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  ElementRef,
+  inject,
+  output,
+  viewChild,
+} from '@angular/core';
 
 @Component({
   selector: 'app-experience',
   standalone: true,
   imports: [],
   templateUrl: './experience.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExperienceComponent {
+  private readonly destroyRef = inject(DestroyRef);
 
-  scrollContainer = viewChild<ElementRef<HTMLElement>>('scrollContainer');
+  readonly scrollContainer = viewChild<ElementRef<HTMLElement>>('scrollContainer');
+  readonly frameCanvas = viewChild<ElementRef<HTMLCanvasElement>>('frameCanvas');
+  readonly text1 = viewChild<ElementRef<HTMLElement>>('text1');
+  readonly text3 = viewChild<ElementRef<HTMLElement>>('text3');
+  readonly scrollTo = output<string>();
 
-  frameCanvas = viewChild<ElementRef<HTMLCanvasElement>>('frameCanvas');
-  
-  /** Reference to the first overlay text element in the animation sequence. */
-  text1 = viewChild<ElementRef<HTMLElement>>('text1');
-  
-  /** Reference to the second overlay text element in the animation sequence. */
-  text3 = viewChild<ElementRef<HTMLElement>>('text3');
-
-  /** Event emitter mapped to the 'RESERVAR AHORA' button click */
-  scrollTo = output<string>();
-
-  /** Total number of frames available for the animation sequence. */
   private readonly frameCount = 120;
-  
-  /** Object tracking the current frame index, updated by GSAP during scroll. */
-  private currentFrame = { frame: 0 };
-  
-  /** Array holding the preloaded HTML image elements. */
-  private images: HTMLImageElement[] = [];
+  private readonly currentFrame = { frame: 0 };
+  private readonly images: Array<HTMLImageElement | undefined> = new Array(this.frameCount);
+  private destroyed = false;
 
   constructor() {
-    afterNextRender(() => {
-      this.initPreloadAndGsap();
-    });
+    this.destroyRef.onDestroy(() => (this.destroyed = true));
+    afterNextRender(() => void this.initializeAnimation());
   }
 
-  /**
-   * Preloads all animation frames and initializes the GSAP scroll triggers.
-   * GSAP is dynamically imported to avoid adding ~200KB to the initial bundle.
-   * This logic is executed only in the browser context after the initial render.
-   */
-  private async initPreloadAndGsap(): Promise<void> {
-    for (let i = 1; i <= this.frameCount; i++) {
-      const img = new Image();
-      const frameNum = i.toString().padStart(3, '0');
-      img.src = `machineFrames/fotograma_${frameNum}.webp`;
-      this.images.push(img);
-    }
-
+  private async initializeAnimation(): Promise<void> {
     const canvas = this.frameCanvas()?.nativeElement;
-    if (!canvas) return;
-    
-    const context = canvas.getContext('2d');
-    if (!context) return;
-
-    this.images[0].onload = () => {
-      canvas.width = this.images[0].width;
-      canvas.height = this.images[0].height;
-      this.renderFrame(context, canvas);
-    };
-
     const container = this.scrollContainer()?.nativeElement;
-    const t1 = this.text1()?.nativeElement;
-    const t3 = this.text3()?.nativeElement;
+    const primaryCopy = this.text1()?.nativeElement;
+    const secondaryCopy = this.text3()?.nativeElement;
+    const context = canvas?.getContext('2d');
+    if (!canvas || !context || !container || !primaryCopy || !secondaryCopy) return;
 
-    if (!container || !t1 || !t3) return;
+    const firstImage = await this.loadFrame(0);
+    if (!firstImage || this.destroyed) return;
+
+    canvas.width = firstImage.naturalWidth;
+    canvas.height = firstImage.naturalHeight;
+    this.renderFrame(context, canvas);
+
+    // Restore the complete sequence. Loading begins as soon as the section is
+    // instantiated so scrolling never advances through deliberately missing frames.
+    for (let index = 1; index < this.frameCount; index++) {
+      void this.loadFrame(index);
+    }
 
     const { gsap } = await import('gsap');
     const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-    gsap.registerPlugin(ScrollTrigger);
+    if (this.destroyed) return;
 
-    const tl = gsap.timeline({
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.set(primaryCopy, { opacity: 1, y: 0 });
+    gsap.set(secondaryCopy, { opacity: 0, y: 0 });
+
+    const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: container,
-        start: 'top 75%',
+        start: 'top bottom',
         end: 'bottom top',
         scrub: 1,
-      }
+        invalidateOnRefresh: true,
+      },
     });
 
-    tl.to(this.currentFrame, {
-      frame: this.frameCount - 1,
-      snap: 'frame',
-      ease: 'none',
-      duration: 1,
-      onUpdate: () => this.renderFrame(context, canvas)
-    }, 0);
+    timeline.to(
+      this.currentFrame,
+      {
+        frame: this.frameCount - 1,
+        snap: 'frame',
+        ease: 'none',
+        duration: 1,
+        onUpdate: () => this.renderFrame(context, canvas),
+      },
+      0,
+    );
+    timeline.to(primaryCopy, { opacity: 0, y: -40, duration: 0.1 }, 0.38);
+    timeline.to(secondaryCopy, { opacity: 1, y: -20, duration: 0.1 }, 0.43);
 
-    tl.to(t1, { opacity: 1, y: -20, duration: 0.1, ease: 'power1.out' }, 0.20);
-    tl.to(t1, { opacity: 0, y: -40, duration: 0.1, ease: 'power1.in' }, 0.40);
-
-    tl.to(t3, { opacity: 1, y: -20, duration: 0.1, ease: 'power1.out' }, 0.45);
+    ScrollTrigger.refresh();
+    this.destroyRef.onDestroy(() => {
+      timeline.scrollTrigger?.kill();
+      timeline.kill();
+    });
   }
 
-  /**
-   * Clears the canvas and draws the image corresponding to the current frame.
-   *
-   * @param context - The 2D rendering context of the canvas.
-   * @param canvas - The HTML canvas element being drawn upon.
-   */
+  private loadFrame(index: number): Promise<HTMLImageElement | null> {
+    return new Promise((resolve) => {
+      const image = new Image();
+      const frameNumber = (index + 1).toString().padStart(3, '0');
+      image.decoding = 'async';
+      image.onload = () => resolve(image);
+      image.onerror = () => resolve(null);
+      this.images[index] = image;
+      image.src = `machineFrames/fotograma_${frameNumber}.webp`;
+    });
+  }
+
   private renderFrame(context: CanvasRenderingContext2D, canvas: HTMLCanvasElement): void {
-    const frameIndex = Math.round(this.currentFrame.frame);
-    const img = this.images[frameIndex];
-    if (img && img.complete) {
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.drawImage(img, 0, 0, canvas.width, canvas.height);
+    const requestedIndex = Math.round(this.currentFrame.frame);
+    let image = this.images[requestedIndex];
+
+    for (
+      let distance = 1;
+      (!image || !image.complete || image.naturalWidth === 0) && distance < this.frameCount;
+      distance++
+    ) {
+      image = this.images[requestedIndex - distance] ?? this.images[requestedIndex + distance];
     }
+
+    if (!image?.complete || image.naturalWidth === 0) return;
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
   }
 
-  /**
-   * Triggered by the template to emit the scroll action to the parent component.
-   */
   onReserveClick(): void {
     this.scrollTo.emit('reservar');
   }
