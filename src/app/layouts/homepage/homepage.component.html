@@ -1,10 +1,12 @@
 <div class="min-h-screen bg-white">
+  <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
 
   <app-navbar></app-navbar>
 
-  <section id="inicio" class="w-full">
-    <app-hero-video></app-hero-video>
-  </section>
+  <main id="main-content">
+    <section id="inicio" class="w-full">
+      <app-hero-video></app-hero-video>
+    </section>
 
   @defer (on viewport; prefetch on idle) {
     <app-experience (scrollTo)="scrollToSection($event)"></app-experience>
@@ -20,7 +22,9 @@
     </section>
   }
 
-  <app-services></app-services>
+    <app-services></app-services>
+
+    <app-local-info></app-local-info>
 
   @defer (on viewport; prefetch on idle) {
     <section id="reservar" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
@@ -73,6 +77,7 @@
       </div>
     </section>
   }
+  </main>
 
   <footer class="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white border-t border-black/5">
     <app-footer></app-footer>

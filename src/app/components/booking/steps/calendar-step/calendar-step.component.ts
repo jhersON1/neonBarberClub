@@ -7,6 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { UpperCasePipe } from '@angular/common';
+import { BUSINESS_CONFIG } from '../../../../core/config/business.config';
 
 /** Internal representation of a single calendar cell. */
 interface CalendarDay {
@@ -35,6 +36,18 @@ const DAY_NAMES_ES: readonly string[] = [
   'LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB', 'DOM',
 ];
 
+function getBusinessToday(): Date {
+  const dateParts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: BUSINESS_CONFIG.timezone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(new Date());
+  const getPart = (type: Intl.DateTimeFormatPartTypes) =>
+    Number(dateParts.find((part) => part.type === type)?.value);
+  return new Date(getPart('year'), getPart('month') - 1, getPart('day'));
+}
+
 /**
  * Step 3 – Month calendar + time-slot picker.
  *
@@ -56,6 +69,8 @@ export class CalendarStepComponent {
   /** True while the parent is fetching availability from the backend. */
   readonly isLoadingSlots = input(false);
 
+  readonly availabilityError = input<string | null>(null);
+
   /** The currently selected date in YYYY-MM-DD format (null = none). */
   readonly selectedDate = input<string | null>(null);
 
@@ -69,9 +84,11 @@ export class CalendarStepComponent {
   /** Fires when the user clicks a time-slot button. Payload is HH:mm. */
   readonly timeSelected = output<string>();
 
+  readonly retryRequested = output<void>();
+
   // ── Internal state ──────────────────────────────────────────────────
   /** The month currently displayed in the calendar grid. */
-  private readonly viewDate = signal(new Date());
+  private readonly viewDate = signal(getBusinessToday());
 
   /** Spanish day-name headers. */
   readonly dayNames = DAY_NAMES_ES;
@@ -84,11 +101,22 @@ export class CalendarStepComponent {
 
   /** Whether the user can navigate to the previous month (not before current month). */
   readonly canGoPrevious = computed(() => {
-    const now = new Date();
+    const now = getBusinessToday();
     const v = this.viewDate();
     return (
       v.getFullYear() > now.getFullYear() ||
       (v.getFullYear() === now.getFullYear() && v.getMonth() > now.getMonth())
+    );
+  });
+
+  readonly canGoNext = computed(() => {
+    const maximum = getBusinessToday();
+    maximum.setDate(1);
+    maximum.setMonth(maximum.getMonth() + BUSINESS_CONFIG.booking.maximumAdvanceMonths);
+    const view = this.viewDate();
+    return (
+      view.getFullYear() < maximum.getFullYear() ||
+      (view.getFullYear() === maximum.getFullYear() && view.getMonth() < maximum.getMonth())
     );
   });
 
@@ -108,6 +136,7 @@ export class CalendarStepComponent {
 
   /** Navigates the calendar view to the next month. */
   nextMonth(): void {
+    if (!this.canGoNext()) return;
     const d = new Date(this.viewDate());
     d.setMonth(d.getMonth() + 1);
     this.viewDate.set(d);
@@ -124,6 +153,10 @@ export class CalendarStepComponent {
     this.timeSelected.emit(time);
   }
 
+  retryAvailability(): void {
+    this.retryRequested.emit();
+  }
+
   // ── Private helpers ─────────────────────────────────────────────────
 
   /**
@@ -134,7 +167,7 @@ export class CalendarStepComponent {
   private buildMonthGrid(year: number, month: number): CalendarDay[] {
     const days: CalendarDay[] = [];
     // "tomorrow" is the first bookable day; today and earlier are non-selectable.
-    const today = new Date();
+    const today = getBusinessToday();
     today.setHours(0, 0, 0, 0);
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -186,7 +219,7 @@ export class CalendarStepComponent {
       isCurrentMonth,
       isPast: date.getTime() < tomorrow.getTime(),
       isToday: date.getTime() === today.getTime(),
-      isClosed: date.getDay() === 3,
+      isClosed: date.getDay() === BUSINESS_CONFIG.openingHours.closedWeekday,
     };
   }
 

@@ -1,21 +1,22 @@
 User-agent: *
 Allow: /
 
-# Sitemaps
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
 Sitemap: https://neonbarberclub.com/sitemap.xml
-Sitemap: https://neonbarberclub.com/sitemap-simple.xml
-
-# Crawl-delay
-Crawl-delay: 1
-
-# Disallow certain file types for optimization
-Disallow: /*.pdf$
-Disallow: /*.doc$
-Disallow: /*.docx$
-
-# Allow important resources
-Allow: /corte.webp
-Allow: /barba.webp
-Allow: /neonBarberBackground.webp
-Allow: /barber-hero.mp4
-Allow: /favicon.ico

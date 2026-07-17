@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { BUSINESS_CONFIG, BUSINESS_LINKS } from '../../core/config/business.config';
+import { scrollToSection } from '../utils/scroll-to-section';
 
 @Component({
   selector: 'app-footer',
@@ -9,18 +11,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   }
 })
 export class FooterComponent {
-
-  scrollToSection(sectionId: string) {
-    const targetElement = document.getElementById(sectionId);
-
-    if (targetElement) {
-      const navbarHeight = 80;
-      const elementPosition = targetElement.offsetTop - navbarHeight;
-      
-      window.scrollTo({
-        top: elementPosition,
-        behavior: 'smooth'
-      });
-    }
-  }
+  readonly business = BUSINESS_CONFIG;
+  readonly links = BUSINESS_LINKS;
+  readonly currentYear = new Date().getFullYear();
+  readonly scrollToSection = scrollToSection;
 }

@@ -20,7 +20,8 @@
     <button
       type="button"
       (click)="nextMonth()"
-      class="w-9 h-9 rounded-none flex items-center justify-center hover:bg-gray-100 transition-all duration-200"
+      [disabled]="!canGoNext()"
+      class="w-9 h-9 rounded-none flex items-center justify-center hover:bg-gray-100 transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed"
       aria-label="Mes siguiente"
     >
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -53,6 +54,8 @@
         [class.shadow-sm]="day.dateString === selectedDate()"
         [class.font-medium]="day.isToday || day.dateString === selectedDate()"
         [class.text-black]="day.isToday && day.isCurrentMonth && day.dateString !== selectedDate()"
+        [attr.aria-label]="'Seleccionar ' + day.dateString + (day.isClosed ? ', barbería cerrada' : '')"
+        [attr.aria-pressed]="day.dateString === selectedDate()"
       >
         {{ day.dayOfMonth }}
         <!-- Today dot indicator -->
@@ -71,11 +74,23 @@
       HORARIOS DISPONIBLES
     </h4>
 
+    @if (availabilityError()) {
+      <div class="bg-red-50 text-red-700 text-xs px-4 py-3 text-center" role="alert">
+        <p>{{ availabilityError() }}</p>
+        @if (availableSlots().length === 0 && !isLoadingSlots()) {
+          <button type="button" (click)="retryAvailability()" class="mt-2 underline underline-offset-4 font-medium">
+            Volver a intentar
+          </button>
+        }
+      </div>
+    }
+
     @if (isLoadingSlots()) {
       <div class="flex justify-center py-8">
-        <div class="w-5 h-5 border-[1.5px] border-gray-200 border-t-black rounded-full animate-spin"></div>
+        <div class="w-5 h-5 border-[1.5px] border-gray-200 border-t-black rounded-full animate-spin" aria-hidden="true"></div>
+        <span class="sr-only" role="status">Consultando horarios disponibles</span>
       </div>
-    } @else if (availableSlots().length === 0) {
+    } @else if (availableSlots().length === 0 && !availabilityError()) {
       <p class="text-center text-gray-300 text-sm py-8 font-light">
         No hay horarios disponibles para esta fecha
       </p>
@@ -91,6 +106,8 @@
             [class.text-white]="slot === selectedTime()"
             [class.shadow-sm]="slot === selectedTime()"
             [class.border-gray-100]="slot !== selectedTime()"
+            [attr.aria-pressed]="slot === selectedTime()"
+            [attr.aria-label]="'Reservar a las ' + slot"
           >
             {{ slot }}
           </button>

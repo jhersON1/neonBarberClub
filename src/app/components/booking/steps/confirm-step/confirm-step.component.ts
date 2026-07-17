@@ -57,8 +57,9 @@ export class ConfirmStepComponent {
 
   // ── Form ────────────────────────────────────────────────────────────
   readonly form = this.fb.nonNullable.group({
-    clientName: ['', [Validators.required, Validators.minLength(3)]],
+    clientName: ['', [Validators.required, Validators.pattern(/.*\S.*/), Validators.minLength(3)]],
     clientPhone: ['', [Validators.required, Validators.pattern(/^\d{7,8}$/)]],
+    privacyConsent: [false, Validators.requiredTrue],
   });
 
   /** Shortcut for template access to the clientName control. */
@@ -69,6 +70,10 @@ export class ConfirmStepComponent {
   /** Shortcut for template access to the clientPhone control. */
   get phoneCtrl() {
     return this.form.controls.clientPhone;
+  }
+
+  get privacyCtrl() {
+    return this.form.controls.privacyConsent;
   }
 
   // ── Computed ────────────────────────────────────────────────────────

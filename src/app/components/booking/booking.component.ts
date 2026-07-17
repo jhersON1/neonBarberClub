@@ -8,11 +8,11 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { finalize } from 'rxjs';
+import { finalize, Subscription } from 'rxjs';
 
 import { BookingApiService } from '../../core/services/booking-api.service';
 import { Barber, BarberService, BookingSummary, CreateReservationRequest } from '../../core/models';
+import { BUSINESS_CONFIG, BUSINESS_LINKS } from '../../core/config/business.config';
 
 import { BookingProgressBarComponent } from './components/booking-progress-bar.component';
 import { ServiceStepComponent } from './steps/service-step/service-step.component';
@@ -40,13 +40,10 @@ const TOTAL_STEPS = 4;
 export class BookingComponent implements OnInit {
   private readonly bookingService = inject(BookingApiService);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly sanitizer = inject(DomSanitizer);
+  private availabilitySubscription?: Subscription;
 
-  private readonly calendarBaseUrl = 'https://calendar.google.com/calendar/embed?src=4029010d62b455a6c54464f935e4c2abb45a5b3880a88512197b77aa474af2e0%40group.calendar.google.com&ctz=America%2FLa_Paz&mode=WEEK&showTitle=0&showPrint=0&hl=es&showTabs=0&showCalendars=0&showTz=0';
-
-  readonly calendarSrc = signal<SafeResourceUrl>(
-    this.sanitizer.bypassSecurityTrustResourceUrl(this.calendarBaseUrl)
-  );
+  readonly business = BUSINESS_CONFIG;
+  readonly links = BUSINESS_LINKS;
 
   readonly currentStep = signal(1);
 
@@ -61,6 +58,7 @@ export class BookingComponent implements OnInit {
 
   readonly servicesError = signal<string | null>(null);
   readonly barbersError = signal<string | null>(null);
+  readonly slotsError = signal<string | null>(null);
   readonly submitError = signal<string | null>(null);
 
   readonly selectedService = signal<BarberService | null>(null);
@@ -135,7 +133,7 @@ export class BookingComponent implements OnInit {
    * Retries loading the active services if a network error occurs.
    */
   retryLoadServices(): void {
-    this.loadServices();
+    this.loadServices(true);
   }
 
   /**
@@ -151,7 +149,7 @@ export class BookingComponent implements OnInit {
    * Retries loading the active barbers if a network error occurs.
    */
   retryLoadBarbers(): void {
-    this.loadBarbers();
+    this.loadBarbers(true);
   }
 
   /**
@@ -172,6 +170,12 @@ export class BookingComponent implements OnInit {
    */
   onTimeSelected(time: string): void {
     this.selectedTime.set(time);
+    this.slotsError.set(null);
+  }
+
+  retryAvailability(): void {
+    const date = this.selectedDate();
+    if (date) this.fetchAvailability(date);
   }
 
   /**
@@ -207,22 +211,22 @@ export class BookingComponent implements OnInit {
       .subscribe({
         next: () => {
           this.currentStep.set(5);
-          this.calendarSrc.set(
-            this.sanitizer.bypassSecurityTrustResourceUrl(`${this.calendarBaseUrl}&bypassCache=${Date.now()}`)
-          );
         },
         error: (httpError) => {
           if (httpError.status === 429) {
             this.submitError.set(
-              'Too many attempts. Please wait a few minutes before trying again.',
+              'Demasiados intentos. Espera unos minutos antes de volver a intentarlo.',
             );
           } else if (httpError.status === 409) {
-            this.submitError.set(
-              'This time slot has just been reserved. Please go back and choose another one.',
+            this.currentStep.set(3);
+            this.selectedTime.set(null);
+            this.fetchAvailability(
+              date,
+              'Ese horario acaba de reservarse. Elige uno de los horarios actualizados.',
             );
           } else {
             this.submitError.set(
-              'An error occurred while processing your reservation. Please try again.',
+              'No pudimos procesar tu reserva. Comprueba tu conexión e inténtalo de nuevo.',
             );
           }
         },
@@ -233,11 +237,13 @@ export class BookingComponent implements OnInit {
    * Resets the entire wizard state to allow the user to make a new reservation.
    */
   resetWizard(): void {
+    this.availabilitySubscription?.unsubscribe();
     this.selectedService.set(null);
     this.selectedBarber.set(null);
     this.selectedDate.set(null);
     this.selectedTime.set(null);
     this.availableSlots.set([]);
+    this.slotsError.set(null);
     this.submitError.set(null);
     this.currentStep.set(1);
   }
@@ -245,12 +251,12 @@ export class BookingComponent implements OnInit {
   /**
    * Fetches active services from the backend.
    */
-  private loadServices(): void {
+  private loadServices(forceRefresh = false): void {
     this.isLoadingServices.set(true);
     this.servicesError.set(null);
 
     this.bookingService
-      .getActiveServices()
+      .getActiveServices(forceRefresh)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         finalize(() => this.isLoadingServices.set(false)),
@@ -258,19 +264,19 @@ export class BookingComponent implements OnInit {
       .subscribe({
         next: (availableServices) => this.services.set(availableServices),
         error: () =>
-          this.servicesError.set('Error loading services. Please try again.'),
+          this.servicesError.set('No pudimos cargar los servicios. Inténtalo de nuevo.'),
       });
   }
 
   /**
    * Fetches active barbers from the backend.
    */
-  private loadBarbers(): void {
+  private loadBarbers(forceRefresh = false): void {
     this.isLoadingBarbers.set(true);
     this.barbersError.set(null);
 
     this.bookingService
-      .getActiveBarbers()
+      .getActiveBarbers(forceRefresh)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         finalize(() => this.isLoadingBarbers.set(false)),
@@ -278,7 +284,7 @@ export class BookingComponent implements OnInit {
       .subscribe({
         next: (availableBarbers) => this.barbers.set(availableBarbers),
         error: () =>
-          this.barbersError.set('Error loading barbers. Please try again.'),
+          this.barbersError.set('No pudimos cargar los barberos. Inténtalo de nuevo.'),
       });
   }
 
@@ -286,15 +292,17 @@ export class BookingComponent implements OnInit {
    * Fetches the available time slots for a specific date, barber, and service.
    * @param date The ISO format date string for which to fetch availability.
    */
-  private fetchAvailability(date: string): void {
+  private fetchAvailability(date: string, notice: string | null = null): void {
     const service = this.selectedService();
     const barber = this.selectedBarber();
     if (!service || !barber) return;
 
+    this.availabilitySubscription?.unsubscribe();
     this.isLoadingSlots.set(true);
     this.availableSlots.set([]);
+    this.slotsError.set(notice);
 
-    this.bookingService
+    this.availabilitySubscription = this.bookingService
       .getAvailability(date, barber.id, service.id)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
@@ -302,7 +310,10 @@ export class BookingComponent implements OnInit {
       )
       .subscribe({
         next: (availableTimeSlots) => this.availableSlots.set(availableTimeSlots),
-        error: () => this.availableSlots.set([]),
+        error: () => {
+          this.availableSlots.set([]);
+          this.slotsError.set('No pudimos consultar los horarios. Inténtalo de nuevo.');
+        },
       });
   }
 
@@ -318,8 +329,11 @@ export class BookingComponent implements OnInit {
    * Clears the selected date, time, and available slots.
    */
   private clearFromDate(): void {
+    this.availabilitySubscription?.unsubscribe();
+    this.isLoadingSlots.set(false);
     this.selectedDate.set(null);
     this.selectedTime.set(null);
     this.availableSlots.set([]);
+    this.slotsError.set(null);
   }
 }

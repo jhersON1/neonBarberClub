@@ -1,59 +1,40 @@
-# NeonBarberClub
+# Neon Barber Club
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.0.
+Sitio público y sistema de pre-reservas de Neon Barber Club, barbería ubicada en Plan 3 Mil, Santa Cruz de la Sierra.
 
-## Development server
+## Stack
 
-To start a local development server, run:
+- Angular 20 con componentes standalone, señales, `OnPush` y detección de cambios sin Zone.js.
+- Tailwind CSS 4.
+- Renderizado estático (SSG) con Angular SSR para entregar HTML indexable.
+- API externa para servicios, barberos, disponibilidad y reservas.
 
-```bash
-ng serve
-```
+## Desarrollo
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Requiere Node.js 20 y pnpm 11.
 
 ```bash
-ng generate component component-name
+pnpm install
+pnpm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+La aplicación queda disponible en `http://localhost:4200/`.
+
+## Verificación
 
 ```bash
-ng generate --help
+pnpm test:ci
+pnpm build
 ```
 
-## Building
+La compilación de producción se genera en `dist/neon-barber-club/` e incluye el HTML prerenderizado.
 
-To build the project run:
+## Datos públicos y SEO
 
-```bash
-ng build
-```
+La información pública del negocio tiene una fuente única en `src/app/core/config/business.config.ts`. Si cambian teléfono, dirección, horarios, adelanto o coordenadas, actualiza primero ese archivo y alinea también los datos estructurados de `src/index.html`.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+El proyecto incluye metadatos Open Graph, JSON-LD de negocio local y preguntas frecuentes, `robots.txt`, sitemap y permisos para rastreadores de búsqueda asistida por IA. No se mantiene un `llms.txt`: el contenido canónico debe seguir siendo el HTML visible e indexable.
 
-## Running unit tests
+## Despliegue
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Los cambios enviados a `develop` ejecutan pruebas, compilación estática y despliegue a GitHub Pages mediante `.github/workflows/deploy.yaml`.
